@@ -2857,87 +2857,20 @@
     }
 
     .alerta-banner {
-      position: relative;
-      display: grid;
-      grid-template-columns: 33% 67%;
+      display: block;
       width: 100%;
-      min-height: 118px;
       margin: 0 auto;
       padding: 0;
-      overflow: hidden;
-      border: 1px solid #d5d5d5;
-      background: linear-gradient(90deg, #ffffff 0 33%, #e7f2f4 33% 100%);
-      color: #585858;
-      text-align: left;
-      font: bold 7px Arial, Helvetica, sans-serif;
-      line-height: 1.12;
-    }
-
-    .alerta-banner .dae-mark {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #2f7fbd;
-      font: bold 28px Arial, Helvetica, sans-serif;
-      letter-spacing: -2px;
-    }
-
-    .alerta-banner .dae-mark::after {
-      content: "Dirección de\\A Administración Escolar";
-      white-space: pre;
       display: block;
-      color: #555;
-      font: normal 7px Arial, Helvetica, sans-serif;
-      letter-spacing: 0;
-      margin-left: 4px;
-      line-height: 1;
+      background: #fff;
+      border: 0;
     }
 
-    .alerta-content {
-      padding: 7px 8px 5px 10px;
-      text-align: left;
-    }
-
-    .alerta-banner h3 {
-      margin: 0 0 2px;
-      color: #2f6fb3;
-      text-align: center;
-      font: bold 23px Arial, Helvetica, sans-serif;
-      letter-spacing: 10px;
-      line-height: 1;
-    }
-
-    .alerta-banner p {
-      margin: 1px 0;
-    }
-
-    .alerta-banner .denuncia {
-      position: absolute;
-      right: 10px;
-      bottom: 25px;
-      margin: 0;
-      color: #e21a1a;
-      background: transparent;
-      font: bold 19px Arial, Helvetica, sans-serif;
-    }
-
-    .alerta-banner .footer-yellow {
+    .dae-menu-img {
       display: block;
-      width: 168px;
-      margin: 3px 0 0 auto;
-      padding: 2px 4px;
-      background: #ffd54a;
-      color: #6a5100;
-      text-align: center;
-      font: bold 6px Arial, Helvetica, sans-serif;
-    }
-
-    .alerta-banner .aviso-corner {
-      position: absolute;
-      right: 2px;
-      bottom: -2px;
-      color: #4f8fbf;
-      font: bold 20px Arial, Helvetica, sans-serif;
+      width: 100%;
+      height: auto;
+      object-fit: contain;
     }
 
     @media (max-width: 620px) {
@@ -3009,40 +2942,7 @@
       }
 
       .alerta-banner {
-        min-height: 103px;
-        font-size: 5px;
-      }
-
-      .alerta-banner .dae-mark {
-        font-size: 24px;
-      }
-
-      .alerta-banner .dae-mark::after {
-        font-size: 5px;
-      }
-
-      .alerta-content {
-        padding: 5px 6px;
-      }
-
-      .alerta-banner h3 {
-        font-size: 18px;
-        letter-spacing: 8px;
-      }
-
-      .alerta-banner .denuncia {
-        right: 8px;
-        bottom: 22px;
-        font-size: 15px;
-      }
-
-      .alerta-banner .footer-yellow {
-        width: 130px;
-        font-size: 5px;
-      }
-
-      .alerta-banner .aviso-corner {
-        font-size: 16px;
+        width: 100%;
       }
     }
   </style>
@@ -3235,16 +3135,7 @@
                 </div>
               </div>
               <div class="alerta-banner">
-                <div class="dae-mark">DAE</div>
-                <div class="alerta-content">
-                  <h3>ALERTA</h3>
-                  <p>Recuerda que la única forma de ingresar al IPN es haber participado en la Convocatoria del Proceso de Admisión, presentada de manera regular aprobada.</p>
-                  <p>La única forma de liberar el servicio social, acreditar algún idioma, acreditar las electivas o alguna otra Unidad de Aprendizaje, debe obtener un dictamen de la COSIE.</p>
-                  <p>Ningún empleado del Instituto está facultado para solicitarte datos personales por redes sociales.</p>
-                  <div class="denuncia">¡DENUNCIA!</div>
-                  <div class="footer-yellow">Actúa con honestidad y no seas cómplice de algún DELITO</div>
-                </div>
-                <div class="aviso-corner">AVISO</div>
+                <img class="dae-menu-img" src="dae_imagen_menu_principal.jpg" alt="Aviso de la Dirección de Administración Escolar">
               </div>
             </div>
           </div>
