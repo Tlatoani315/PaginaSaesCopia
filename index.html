@@ -3678,36 +3678,18 @@
     }
 
     #panel-kardex .kardex-table {
-      display: block !important;
       width: 100% !important;
       min-width: 0 !important;
       max-width: 100% !important;
-      table-layout: auto !important;
-    }
-
-    #panel-kardex .kardex-table thead,
-    #panel-kardex .kardex-table tbody {
-      display: block !important;
-      width: 100% !important;
-    }
-
-    #panel-kardex .kardex-table tr {
-      display: grid !important;
-      grid-template-columns: 9% 39% 17% 10% 12% 13%;
-      width: 100% !important;
-      max-width: 100% !important;
+      table-layout: fixed !important;
     }
 
     #panel-kardex .kardex-table th,
     #panel-kardex .kardex-table td {
-      display: block !important;
       box-sizing: border-box;
-      width: auto !important;
-      min-width: 0 !important;
       white-space: normal !important;
       word-break: break-word !important;
       overflow-wrap: break-word !important;
-      overflow: hidden;
     }
 
     @media (max-width: 620px) {
@@ -3723,13 +3705,118 @@
       }
 
       #panel-kardex .kardex-table {
-        font-size: 6px !important;
+        font-size: 4.8px !important;
       }
 
       #panel-kardex .kardex-table th,
       #panel-kardex .kardex-table td {
-        padding: 3px 1px !important;
-        line-height: 1.12 !important;
+        padding: 2px 0 !important;
+      }
+    }
+
+    /* ===== EXPEDIENTE DIGITAL ===== */
+    #panel-expediente-digital {
+      min-height: 510px;
+      background: #dedede;
+      padding: 0;
+    }
+
+    .expediente-wrap {
+      width: 86%;
+      margin: 36px auto 0;
+      background: #fff;
+    }
+
+    .expediente-table {
+      width: 100%;
+      border-collapse: collapse;
+      font: normal 10px Verdana, Arial, Helvetica, sans-serif;
+      color: #333;
+    }
+
+    .expediente-table th {
+      height: 18px;
+      background-color: Maroon;
+      color: White;
+      border-right: 1px solid #fff;
+      font-size: x-small;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .expediente-table th:last-child {
+      border-right: 0;
+    }
+
+    .expediente-table td {
+      height: 48px;
+      padding: 8px 10px;
+      background: #fff;
+      vertical-align: middle;
+      border: 0;
+    }
+
+    .expediente-table td:nth-child(1) {
+      width: 49%;
+    }
+
+    .expediente-table td:nth-child(2) {
+      width: 14%;
+      text-align: center;
+    }
+
+    .expediente-table td:nth-child(3) {
+      width: 37%;
+      text-align: center;
+    }
+
+    .btn-documento {
+      display: inline-block;
+      min-width: 210px;
+      height: 25px;
+      padding: 6px 18px;
+      border: 0;
+      border-radius: 3px;
+      background: #7a123f;
+      color: #fff;
+      text-align: center;
+      text-decoration: none;
+      font: bold 11px Verdana, Arial, Helvetica, sans-serif;
+      line-height: 13px;
+      cursor: pointer;
+    }
+
+    .btn-documento:hover {
+      text-decoration: none;
+      background: #681034;
+    }
+
+    @media (max-width: 620px) {
+      .expediente-wrap {
+        width: 83%;
+        margin-top: 26px;
+      }
+
+      .expediente-table {
+        font-size: 6px;
+      }
+
+      .expediente-table th {
+        height: 12px;
+        font-size: 6px;
+      }
+
+      .expediente-table td {
+        height: 34px;
+        padding: 5px 4px;
+      }
+
+      .btn-documento {
+        min-width: 94px;
+        height: 17px;
+        padding: 4px 8px;
+        font-size: 6px;
+        line-height: 9px;
       }
     }
   </style>
@@ -3839,7 +3926,7 @@
             <a class="menu-item" data-view="datos-medicos" onclick="navigate('datos-medicos')">Datos Médicos</a>
             <a class="menu-item" data-view="datos-extracurriculares" onclick="navigate('datos-extracurriculares')">Datos Extracurriculares</a>
           </div>
-          <a class="menu-single" onclick="showOffline()">Expediente Digital</a>
+          <a class="menu-single" data-view="expediente-digital" onclick="navigate('expediente-digital')">Expediente Digital</a>
           <a class="menu-single" onclick="showOffline()">Pase Digital</a>
           <a class="menu-single" onclick="showOffline()">Cambios de Carrera</a>
           <a class="menu-single" onclick="showOffline()">Red Académica ISISA</a>
@@ -3902,6 +3989,29 @@
 
         <!-- MAIN PANEL -->
         <main class="main-panel" id="mainPanel">
+
+          <!-- EXPEDIENTE DIGITAL -->
+          <div id="panel-expediente-digital" class="panel-view hidden">
+            <div class="breadcrumb">Inicio » Alumnos » Expediente Digital</div>
+            <div class="expediente-wrap">
+              <table class="expediente-table">
+                <thead>
+                  <tr>
+                    <th>Documento</th>
+                    <th>Fecha</th>
+                    <th>Acción</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Oficio de Asignación de Boleta</td>
+                    <td></td>
+                    <td><a class="btn-documento" href="2024031123_Expediente_Elisua.pdf" target="_blank" rel="noopener">Ver Documento</a></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
 
           <!-- MENU PRINCIPAL -->
           <div id="panel-menu" class="panel-view">
@@ -4351,6 +4461,7 @@
 
     const map = {
       'menu': 'panel-menu',
+      'expediente-digital': 'panel-expediente-digital',
       'datos-personales': 'panel-datos-personales',
       'datos-medicos': 'panel-datos-medicos',
       'datos-extracurriculares': 'panel-datos-extracurriculares',
