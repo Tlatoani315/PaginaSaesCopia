@@ -1,0 +1,3330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SAES - Sistema de Administración Escolar | CECyT 3</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --maroon: #621132;
+      --ipn-red: #7a003c;
+      --orange: #f39200;
+      --orange-active: #ff9900;
+      --gray-bg: #d9d9d9;
+      --gray-light: #ececec;
+      --gray-border: #aaa;
+      --text-dark: #333;
+      --link-red: #800000;
+      --table-header: #7a003c;
+      --table-stripe: #e8f0f8;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 13px;
+      background: #888;
+      color: var(--text-dark);
+      line-height: 1.4;
+    }
+
+    a { color: var(--link-red); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ===== GOV HEADER ===== */
+    .gov-header {
+      background: var(--maroon);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+      font-size: 12px;
+    }
+    .gov-header .gov-logo {
+      font-weight: bold;
+      font-size: 14px;
+      letter-spacing: 0.5px;
+    }
+    .gov-header .gov-logo span { display: block; font-size: 10px; font-weight: normal; }
+    .gov-header nav { display: flex; gap: 16px; align-items: center; }
+    .gov-header nav a { color: #fff; }
+
+    /* ===== INSTITUTION HEADER ===== */
+    .inst-header {
+      background: #fff;
+      border-bottom: 1px solid #ccc;
+      padding: 10px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .inst-header .ipn-logo {
+      width: 48px;
+      height: 48px;
+      flex-shrink: 0;
+      background: var(--ipn-red);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: bold;
+      font-size: 11px;
+    }
+    .inst-header .inst-title {
+      flex: 1;
+      text-align: center;
+      color: var(--ipn-red);
+      font-weight: bold;
+      font-size: 11px;
+      line-height: 1.3;
+    }
+    .inst-header .inst-icons { display: flex; gap: 6px; align-items: center; }
+    .inst-header .inst-icons .icon-circle {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: #0066cc;
+      color: #fff;
+      font-size: 10px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .inst-header .inst-icons .icon-sm {
+      width: 24px; height: 24px;
+      border: 1px solid #999;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px;
+    }
+
+    /* ===== TOP NAV TABS ===== */
+    .top-nav {
+      background: var(--gray-light);
+      border-bottom: 1px solid #bbb;
+      display: flex;
+      flex-wrap: wrap;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .top-nav a {
+      padding: 8px 12px;
+      color: #333;
+      font-size: 12px;
+      white-space: nowrap;
+      border-right: 1px solid #ccc;
+      cursor: pointer;
+    }
+    .top-nav a.active {
+      background: var(--orange);
+      color: #fff;
+      font-weight: bold;
+    }
+
+    /* ===== MAIN WRAPPER ===== */
+    .page-wrapper {
+      max-width: 1100px;
+      margin: 0 auto;
+      background: var(--gray-bg);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .content-area {
+      flex: 1;
+      padding: 8px;
+    }
+
+    .breadcrumb {
+      font-size: 11px;
+      color: var(--link-red);
+      padding: 4px 0 8px;
+    }
+    .breadcrumb span { color: #666; }
+
+    /* ===== LOGIN PAGE ===== */
+    #view-login .login-container {
+      display: flex;
+      flex-wrap: wrap;
+      border: 1px solid var(--gray-border);
+      background: #fff;
+    }
+    #view-login .login-sidebar {
+      width: 100%;
+      max-width: 220px;
+      padding: 12px;
+      border-right: 1px solid var(--gray-border);
+      background: #fff;
+    }
+    #view-login .login-main {
+      flex: 1;
+      min-width: 260px;
+      padding: 16px;
+    }
+    #view-login .login-sidebar h2 {
+      font-size: 14px;
+      margin-bottom: 12px;
+      color: #333;
+    }
+    #view-login label {
+      display: block;
+      font-size: 12px;
+      margin-bottom: 2px;
+    }
+    #view-login input[type="text"],
+    #view-login input[type="password"] {
+      width: 100%;
+      max-width: 160px;
+      padding: 3px 6px;
+      border: 1px solid #999;
+      margin-bottom: 8px;
+      font-size: 12px;
+    }
+    .captcha-box {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin: 8px 0;
+    }
+    .captcha-img {
+      background: #e8ffe8;
+      border: 1px solid #999;
+      padding: 4px 12px;
+      font-family: monospace;
+      font-size: 18px;
+      font-weight: bold;
+      color: #060;
+      letter-spacing: 4px;
+      font-style: italic;
+    }
+    .btn-iniciar {
+      background: var(--orange);
+      color: #fff;
+      border: none;
+      padding: 6px 20px;
+      font-size: 13px;
+      cursor: pointer;
+      float: right;
+      margin-top: 8px;
+    }
+    .btn-iniciar:hover { background: #e08000; }
+
+    .login-main h1 {
+      text-align: center;
+      font-size: 16px;
+      color: #444;
+      margin-bottom: 8px;
+    }
+    .login-main .desc {
+      text-align: center;
+      font-size: 12px;
+      color: #555;
+      margin-bottom: 16px;
+    }
+    .login-main .hero-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+    .login-main .hero-img {
+      width: 120px;
+      height: 80px;
+      background: #ccc;
+      flex-shrink: 0;
+      object-fit: cover;
+    }
+    .aviso-box {
+      background: var(--maroon);
+      color: #fff;
+      padding: 10px 14px;
+      margin-bottom: 8px;
+      font-size: 11px;
+      line-height: 1.5;
+    }
+    .aviso-box .aviso-title {
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 6px;
+      font-size: 12px;
+    }
+    .aviso-box a { color: #7ec8ff; }
+    .aviso-box .url-orange { color: var(--orange); word-break: break-all; }
+
+    .login-footer {
+      text-align: center;
+      font-size: 11px;
+      color: #666;
+      padding: 8px;
+      border-top: 1px solid #ddd;
+    }
+
+    /* ===== PORTAL LAYOUT (post-login) ===== */
+    .portal-layout {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0;
+      border: 1px solid var(--gray-border);
+    }
+    .sidebar {
+      width: 100%;
+      max-width: 200px;
+      background: var(--gray-light);
+      border-right: 1px solid var(--gray-border);
+      font-size: 11px;
+    }
+    .sidebar .menu-section { border-bottom: 1px solid #ccc; }
+    .sidebar .menu-title {
+      font-weight: bold;
+      padding: 6px 8px 2px;
+      color: #333;
+      font-size: 11px;
+    }
+    .sidebar .menu-item {
+      display: block;
+      padding: 4px 8px 4px 16px;
+      color: #333;
+      cursor: pointer;
+      font-size: 11px;
+    }
+    .sidebar .menu-item:hover { background: #ddd; }
+    .sidebar .menu-item.active {
+      background: var(--orange-active);
+      color: #fff;
+      font-weight: bold;
+    }
+    .sidebar .menu-single {
+      display: block;
+      padding: 6px 8px;
+      font-weight: bold;
+      color: #333;
+      cursor: pointer;
+    }
+    .sidebar .logout-box {
+      padding: 8px;
+      border-top: 1px solid #ccc;
+      background: #fff;
+    }
+    .sidebar .logout-box a { color: var(--link-red); font-weight: bold; }
+    .sidebar .boleta-num { color: var(--orange); font-weight: bold; margin-top: 4px; }
+
+    .main-panel {
+      flex: 1;
+      min-width: 0;
+      background: #fff;
+      padding: 12px;
+    }
+
+    .quick-access {
+      width: 100%;
+      max-width: 140px;
+      padding: 8px;
+      font-size: 11px;
+      border-left: 1px solid var(--gray-border);
+      background: #fff;
+    }
+    .quick-access h4 {
+      color: var(--link-red);
+      font-size: 12px;
+      margin-bottom: 8px;
+    }
+    .quick-access a {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 11px;
+    }
+
+    /* ===== MENU PRINCIPAL ===== */
+    .menu-principal h2 {
+      text-align: center;
+      font-size: 15px;
+      margin-bottom: 12px;
+    }
+    .menu-principal .saludo {
+      text-align: center;
+      color: var(--ipn-red);
+      font-weight: bold;
+      font-size: 13px;
+      margin-bottom: 16px;
+    }
+    .menu-principal .aviso-section {
+      border: 1px solid #ccc;
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+    .menu-principal .aviso-section h3 {
+      color: #660099;
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+    .alerta-banner {
+      border: 2px solid #0066cc;
+      padding: 12px;
+      background: #f5f8ff;
+      font-size: 11px;
+    }
+    .alerta-banner h3 { color: #0066cc; font-size: 16px; margin-bottom: 8px; }
+    .alerta-banner .denuncia {
+      background: #cc0000;
+      color: #fff;
+      padding: 8px;
+      font-weight: bold;
+      margin: 8px 0;
+    }
+    .alerta-banner .footer-yellow {
+      background: #ffcc00;
+      padding: 6px;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 8px;
+    }
+
+    /* ===== DATOS PERSONALES ===== */
+    .doc-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #ccc;
+    }
+    .doc-header .mini-logo {
+      width: 40px; height: 40px;
+      background: var(--ipn-red);
+      color: #fff;
+      font-size: 9px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 3px;
+    }
+    .doc-header .doc-title {
+      flex: 1;
+      font-size: 10px;
+      font-weight: bold;
+      text-align: center;
+    }
+    .datos-layout {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .foto-col {
+      width: 120px;
+      flex-shrink: 0;
+    }
+    .foto-col img {
+      width: 100%;
+      border: 1px solid #999;
+      display: block;
+    }
+    .btn-orange {
+      background: var(--orange);
+      color: #fff;
+      border: none;
+      padding: 5px 12px;
+      font-size: 11px;
+      cursor: pointer;
+      margin-top: 6px;
+      width: 100%;
+    }
+    .tabs-row {
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      border-bottom: 2px solid var(--orange);
+      margin-bottom: 12px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .tabs-row button {
+      background: var(--gray-light);
+      border: 1px solid #bbb;
+      border-bottom: none;
+      padding: 6px 10px;
+      font-size: 11px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .tabs-row button.active {
+      background: var(--orange);
+      color: #fff;
+      font-weight: bold;
+    }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    .datos-table { width: 100%; font-size: 12px; }
+    .datos-table td { padding: 4px 8px; vertical-align: top; }
+    .datos-table td:first-child { font-weight: bold; width: 120px; color: #555; }
+    .legal-text {
+      font-size: 9px;
+      color: var(--link-red);
+      margin-top: 16px;
+      line-height: 1.5;
+      text-align: justify;
+    }
+
+    /* ===== DATOS MEDICOS ===== */
+    .medico-block { margin-bottom: 12px; }
+    .medico-block h4 {
+      background: var(--table-header);
+      color: #fff;
+      padding: 4px 8px;
+      font-size: 12px;
+    }
+    .medico-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    .medico-table td, .medico-table th {
+      border: 1px solid #ccc;
+      padding: 4px 8px;
+    }
+    .medico-table th { background: #f0f0f0; text-align: left; width: 40%; }
+    .medico-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+    @media (max-width: 500px) {
+      .medico-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ===== EXTRACURRICULARES ===== */
+    .empty-data {
+      text-align: center;
+      color: var(--link-red);
+      font-weight: bold;
+      font-size: 14px;
+      padding: 40px 20px;
+      background: #f5f5f5;
+      border: 1px solid #ccc;
+    }
+    .student-info-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 12px;
+      font-size: 12px;
+    }
+    .student-info-row .foto-small img {
+      width: 80px;
+      border: 1px solid #999;
+    }
+
+    /* ===== KARDEX ===== */
+    .kardex-doc {
+      font-size: 11px;
+    }
+    .kardex-header {
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    .kardex-header .k-logos {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+    .kardex-info { margin: 8px 0; font-size: 11px; }
+    .kardex-divider {
+      border: none;
+      border-top: 3px solid var(--table-header);
+      margin: 8px 0;
+    }
+    .kardex-summary {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 11px;
+      margin-bottom: 4px;
+    }
+    .kardex-disclaimer {
+      text-align: center;
+      font-size: 10px;
+      color: #666;
+      margin: 8px 0;
+    }
+    .semestre-title {
+      background: var(--table-header);
+      color: #fff;
+      text-align: center;
+      padding: 4px;
+      font-weight: bold;
+      font-size: 12px;
+      margin-top: 8px;
+    }
+    .kardex-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .kardex-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 10px;
+      min-width: 480px;
+    }
+    .kardex-table th {
+      background: #f0f0f0;
+      border: 1px solid #ccc;
+      padding: 3px 4px;
+      text-align: center;
+    }
+    .kardex-table td {
+      border: 1px solid #ccc;
+      padding: 3px 4px;
+      text-align: center;
+    }
+    .kardex-table td:nth-child(2) { text-align: left; }
+    .kardex-table tr:nth-child(even) { background: var(--table-stripe); }
+
+    /* ===== GOV FOOTER ===== */
+    .gov-footer {
+      background: var(--maroon);
+      color: #fff;
+      padding: 20px 16px;
+      font-size: 11px;
+    }
+    .gov-footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .gov-footer h4 { margin-bottom: 8px; font-size: 12px; }
+    .gov-footer ul { list-style: none; }
+    .gov-footer ul li { margin-bottom: 4px; }
+    .gov-footer a { color: #fff; }
+    .gov-footer .social { display: flex; gap: 8px; margin-top: 8px; }
+    .gov-footer .social span {
+      width: 28px; height: 28px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px;
+    }
+    .portal-footer {
+      text-align: center;
+      padding: 8px;
+      font-size: 11px;
+      background: #fff;
+      border-top: 1px solid #ccc;
+    }
+
+    /* ===== MOBILE MENU TOGGLE ===== */
+    .menu-toggle {
+      display: none;
+      background: var(--orange);
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      width: 100%;
+      font-size: 13px;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .inst-header .inst-title { font-size: 9px; }
+      .gov-header { font-size: 10px; padding: 6px 10px; }
+      .gov-header nav { gap: 8px; }
+
+      #view-login .login-sidebar {
+        max-width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--gray-border);
+      }
+      #view-login input[type="text"],
+      #view-login input[type="password"] { max-width: 100%; }
+
+      .menu-toggle { display: block; }
+      .sidebar {
+        max-width: 100%;
+        display: none;
+        border-right: none;
+        border-bottom: 1px solid var(--gray-border);
+      }
+      .sidebar.open { display: block; }
+
+      .quick-access {
+        max-width: 100%;
+        border-left: none;
+        border-top: 1px solid var(--gray-border);
+      }
+
+      .portal-layout { flex-direction: column; }
+      .main-panel { padding: 8px; }
+
+      .foto-col { width: 100%; max-width: 140px; margin: 0 auto; }
+
+      .top-nav a { padding: 10px 12px; font-size: 11px; }
+    }
+
+    @media (max-width: 480px) {
+      body { font-size: 12px; }
+      .inst-header .ipn-logo { width: 36px; height: 36px; font-size: 9px; }
+      .tabs-row button { padding: 8px 8px; font-size: 10px; }
+    }
+
+    .hidden { display: none !important; }
+
+    /* ===== SAES PIXEL SKIN ===== */
+    html { background: #8a8a8a; }
+    body {
+      font-family: Verdana, Arial, Helvetica, sans-serif;
+      font-size: 10px;
+      background: #8a8a8a;
+      color: #000;
+      line-height: 1.15;
+    }
+    a {
+      color: #8b0000;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+    .page-wrapper {
+      width: 100%;
+      max-width: 620px;
+      min-height: 100vh;
+      margin: 0 auto;
+      background: #dedede;
+      border-left: 6px solid #4a4a4a;
+      border-right: 6px solid #4a4a4a;
+      box-shadow: inset 0 1px 12px rgba(0,0,0,.28);
+    }
+    .gov-header {
+      min-height: 52px;
+      background: #69103a;
+      padding: 7px 80px 7px 86px;
+      align-items: center;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .gov-header .gov-logo {
+      position: relative;
+      color: #fff;
+      font-size: 18px;
+      line-height: .88;
+      letter-spacing: -1px;
+      padding-left: 42px;
+      margin-top: 0;
+      font-family: Georgia, "Times New Roman", serif;
+    }
+    .gov-header .gov-logo::before {
+      content: "MX";
+      position: absolute;
+      left: 0;
+      top: -2px;
+      width: 34px;
+      height: 34px;
+      border: 2px solid rgba(255,255,255,.75);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font: bold 12px Arial, sans-serif;
+      color: rgba(255,255,255,.9);
+    }
+    .gov-header .gov-logo span {
+      display: block;
+      font-size: 9px;
+      letter-spacing: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: normal;
+      margin-bottom: 1px;
+    }
+    .gov-header nav {
+      margin-top: 0;
+      gap: 18px;
+      font: bold 11px Arial, Helvetica, sans-serif;
+    }
+    .gov-header nav a,
+    .gov-header nav span {
+      color: #fff;
+      text-decoration: none;
+    }
+    .inst-header {
+      min-height: 45px;
+      padding: 0 9px 0 13px;
+      background: linear-gradient(#fff 0%, #fafafa 64%, #e7e7e7 100%);
+      border-top: 5px solid #dedede;
+      border-bottom: 1px solid #c3c3c3;
+      box-shadow: inset 0 9px 18px rgba(0,0,0,.18);
+      align-items: center;
+    }
+    .inst-header .ipn-logo,
+    .mini-logo {
+      background: transparent !important;
+      color: #7a003c !important;
+      border-radius: 0 !important;
+      border: 0 !important;
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: bold;
+      text-shadow: 1px 0 #7a003c;
+    }
+    .inst-header .ipn-logo {
+      width: 48px;
+      height: 45px;
+      font-size: 17px;
+      align-items: flex-start;
+      padding-top: 8px;
+    }
+    .inst-header .inst-title {
+      color: #970000;
+      font-family: Verdana, Arial, Helvetica, sans-serif;
+      font-size: 9px;
+      line-height: 1.22;
+      margin-top: 11px;
+    }
+    .inst-header .inst-icons {
+      width: 86px;
+      justify-content: flex-end;
+      gap: 8px;
+      color: #8b0000;
+      font-weight: bold;
+    }
+    .inst-header .inst-icons .icon-circle {
+      width: 42px;
+      height: 42px;
+      background: #fff;
+      border: 3px solid #d0789d;
+      color: #0071bc;
+      font-size: 8px;
+    }
+    .inst-header .inst-icons .icon-sm {
+      border: 0;
+      width: 18px;
+      height: 18px;
+      color: #8b0000;
+      font-size: 16px;
+      line-height: 1;
+    }
+    .top-nav {
+      height: 25px;
+      background: #e6e6e6;
+      border-top: 1px solid #fff;
+      border-bottom: 1px solid #c7c7c7;
+      padding-left: 101px;
+      overflow: visible;
+      flex-wrap: nowrap;
+    }
+    #view-login ~ * .top-nav,
+    .top-nav:first-of-type { padding-left: 205px; }
+    .top-nav a {
+      padding: 3px 8px 4px;
+      min-width: 0;
+      border-right: 1px solid #d7d7d7;
+      border-left: 1px solid #fff;
+      color: #333;
+      font: normal 9px Verdana, Arial, sans-serif;
+      text-decoration: none;
+      background: linear-gradient(#fafafa, #dfdfdf);
+    }
+    .top-nav a.active {
+      background: #ff9900;
+      color: #fff;
+      font-weight: normal;
+    }
+    .content-area {
+      padding: 0 8px 5px;
+      background: #dedede;
+    }
+    .breadcrumb {
+      font-size: 10px;
+      padding: 4px 0 5px 14px;
+      color: #8b0000;
+    }
+    #view-login .breadcrumb { padding-left: 108px; color: #888; }
+    #view-login .login-container {
+      min-height: 366px;
+      border: 1px solid #b6b6b6;
+      background: #fff;
+      box-shadow: 0 0 0 1px #eee inset;
+      flex-wrap: nowrap;
+    }
+    #view-login .login-sidebar {
+      width: 95px;
+      max-width: 95px;
+      padding: 15px 8px 0 8px;
+      border-right: 1px solid #c9c9c9;
+      background: #fff;
+    }
+    #view-login .login-sidebar h2 {
+      font: bold 12px Verdana, Arial, sans-serif;
+      margin-bottom: 13px;
+      color: #333;
+    }
+    #view-login label {
+      font: bold 11px Verdana, Arial, sans-serif;
+      margin-bottom: 5px;
+      text-decoration: underline;
+    }
+    #view-login input[type="text"],
+    #view-login input[type="password"] {
+      width: 61px;
+      max-width: 61px;
+      height: 17px;
+      border: 1px solid #b8b8b8;
+      padding: 2px 4px;
+      margin-bottom: 13px;
+      font-size: 12px;
+      background: #fff;
+    }
+    .captcha-box {
+      margin: -1px 0 15px;
+      gap: 4px;
+    }
+    .captcha-img {
+      width: 62px;
+      height: 34px;
+      padding: 5px 6px;
+      border: 0;
+      background: repeating-linear-gradient(-12deg, transparent 0 6px, rgba(0,120,0,.14) 6px 8px), #eefee9;
+      color: #04a51b;
+      font: italic bold 25px Georgia, serif;
+      letter-spacing: -2px;
+      text-decoration: line-through;
+      transform: skewX(-9deg);
+    }
+    .btn-iniciar,
+    .btn-orange {
+      background: #ff9900;
+      border: 1px solid #f0a12e;
+      color: #fff;
+      font: normal 11px Verdana, Arial, sans-serif;
+      padding: 3px 8px;
+      min-height: 18px;
+    }
+    .btn-iniciar {
+      float: none;
+      display: block;
+      margin: 8px 0 0 auto;
+      padding: 3px 9px;
+    }
+    #view-login .login-main {
+      min-height: 360px;
+      padding: 7px 7px 0;
+      border-left: 1px solid #efefef;
+    }
+    .login-main h1 {
+      font: bold 13px Arial, Helvetica, sans-serif;
+      color: #26323b;
+      margin: 4px 0 14px;
+    }
+    .login-main .desc {
+      width: 90%;
+      margin: 0 auto 16px;
+      font: normal 11px Arial, Helvetica, sans-serif;
+      color: #626262;
+      line-height: 1.45;
+      border-bottom: 4px solid #7a1645;
+      padding-bottom: 16px;
+    }
+    .login-main .desc::after {
+      content: "";
+      display: block;
+      position: absolute;
+    }
+    .login-main .hero-row {
+      justify-content: center;
+      margin-top: 0;
+    }
+    .login-main .hero-row > div {
+      max-width: 340px;
+    }
+    .aviso-box {
+      width: 100%;
+      max-width: 620px;
+      margin: 0 auto 5px;
+      padding: 2px 6px;
+      background: #7a1645;
+      color: #fff;
+      text-align: center;
+      font: bold 10px Arial, Helvetica, sans-serif;
+      line-height: 1.05;
+    }
+    .aviso-box .aviso-title {
+      display: none;
+    }
+    .aviso-box a {
+      color: #0000ee;
+      background: #fff;
+      text-decoration: underline;
+      display: inline-block;
+      padding: 0 3px;
+    }
+    .aviso-box .url-orange {
+      color: #d71920;
+      background: #fff;
+      font-size: 8px;
+      display: inline-block;
+      max-width: 100%;
+    }
+    .login-footer,
+    .portal-footer {
+      height: 21px;
+      line-height: 18px;
+      padding: 0 6px;
+      text-align: left;
+      font: normal 11px Verdana, Arial, sans-serif;
+      background: #fff;
+      border: 1px solid #c9c9c9;
+      color: #555;
+    }
+    .portal-layout {
+      border: 0;
+      min-height: 520px;
+      background: #dedede;
+      flex-wrap: nowrap;
+    }
+    .sidebar {
+      width: 100px;
+      max-width: 100px;
+      background: #ededed;
+      border-right: 1px solid #d3d3d3;
+      font: normal 8px Verdana, Arial, sans-serif;
+      overflow: hidden;
+    }
+    .sidebar .menu-title,
+    .sidebar .menu-single,
+    .sidebar .menu-item {
+      min-height: 12px;
+      line-height: 10px;
+      padding-top: 1px;
+      padding-bottom: 1px;
+      border-bottom: 1px solid #fff;
+      color: #333;
+      text-decoration: none;
+      background: #ededed;
+      font-weight: normal;
+    }
+    .sidebar .menu-title,
+    .sidebar .menu-single {
+      padding-left: 9px;
+    }
+    .sidebar .menu-item {
+      padding-left: 20px;
+    }
+    .sidebar .menu-item.active {
+      background: #ff9900;
+      color: #fff;
+      font-weight: normal;
+    }
+    .sidebar .logout-box {
+      margin: 64px 5px 0 5px;
+      padding: 6px 7px;
+      background: #f5f5f5;
+      border: 0;
+      color: #ff5200;
+    }
+    .sidebar .logout-box a,
+    .sidebar .boleta-num {
+      color: #ff5200;
+      font-size: 8px;
+      font-weight: normal;
+    }
+    .main-panel {
+      flex: 1;
+      min-height: 510px;
+      margin: 0 8px 0 0;
+      padding: 0 5px 6px;
+      background: #fff;
+      border: 1px solid #bfbfbf;
+      overflow: hidden;
+    }
+    #panel-menu {
+      min-height: 390px;
+      padding: 18px 22px;
+    }
+    .menu-principal h2 {
+      text-align: left;
+      margin: 0 0 40px 22px;
+      font: bold 11px Verdana, Arial, sans-serif;
+      letter-spacing: .5px;
+    }
+    .menu-principal .saludo {
+      margin-bottom: 34px;
+      color: #8b0000;
+      font: bold 10px Verdana, Arial, sans-serif;
+    }
+    .menu-principal .aviso-section {
+      width: 86%;
+      margin: 0 auto 22px;
+      padding: 18px 12px;
+      border: 0;
+      color: #7a003c;
+      text-align: center;
+      font-weight: bold;
+      font-size: 11px;
+    }
+    .menu-principal .aviso-section h3 {
+      color: #a0006d;
+      font: bold 22px Arial, Helvetica, sans-serif;
+      text-shadow: 2px 2px 4px rgba(0,0,0,.35);
+      text-align: left;
+      margin-left: 105px;
+    }
+    .alerta-banner {
+      width: 88%;
+      margin: 0 auto;
+      padding: 10px 20px;
+      border: 0;
+      background: linear-gradient(90deg, #fff 0 22%, #d9f3fa 22% 100%);
+      color: #555;
+      font: bold 8px Arial, Helvetica, sans-serif;
+      text-align: center;
+    }
+    .alerta-banner h3 {
+      color: #2e76c4;
+      font: bold 24px Arial, Helvetica, sans-serif;
+      letter-spacing: 14px;
+      margin-bottom: 6px;
+    }
+    .alerta-banner .denuncia {
+      display: inline-block;
+      margin: 6px;
+      padding: 0;
+      background: transparent;
+      color: #e60000;
+      font: bold 25px Arial, Helvetica, sans-serif;
+    }
+    .alerta-banner .footer-yellow {
+      background: #f7d24b;
+      color: #5b4a00;
+      display: inline-block;
+      padding: 3px 8px;
+      margin-top: 6px;
+    }
+    .quick-access {
+      width: 91px;
+      max-width: 91px;
+      margin-top: 24px;
+      padding: 11px 8px;
+      border-left: 0;
+      background: #fff;
+      font-size: 8px;
+      height: fit-content;
+    }
+    .quick-access h4 {
+      color: #333;
+      font: bold 10px Verdana, Arial, sans-serif;
+      margin-bottom: 7px;
+    }
+    .doc-header {
+      margin: 15px 10px 14px;
+      padding: 0 0 8px;
+      border-bottom: 0;
+    }
+    .doc-header .mini-logo {
+      width: 75px;
+      height: 65px;
+      font-size: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .doc-header .doc-title {
+      font: bold 12px Verdana, Arial, sans-serif;
+      line-height: 1.7;
+    }
+    .datos-layout {
+      margin: 0 41px;
+      gap: 22px;
+    }
+    .foto-col {
+      width: 156px;
+      text-align: center;
+    }
+    .foto-col img {
+      width: 156px;
+      height: 186px;
+      object-fit: cover;
+      border: 2px solid #333;
+    }
+    .tabs-row {
+      margin: 0 0 0;
+      border-bottom: 1px solid #999;
+      overflow-x: auto;
+    }
+    .tabs-row button {
+      padding: 2px 7px;
+      min-height: 19px;
+      border: 1px solid #94a8bf;
+      background: #f3f7fb;
+      color: #000;
+      font: normal 10px Verdana, Arial, sans-serif;
+    }
+    .tabs-row button.active {
+      color: #000;
+      background: #fff7cf;
+      font-weight: normal;
+    }
+    .tab-content {
+      min-height: 200px;
+      border: 1px solid #b5b5b5;
+      border-top: 0;
+      padding: 25px 60px;
+    }
+    .datos-table {
+      font-size: 11px;
+    }
+    .datos-table td {
+      padding: 6px 8px;
+    }
+    .datos-table td:first-child {
+      width: 94px;
+      color: #000;
+    }
+    .legal-text {
+      margin: 22px 9px 0;
+      color: #b00000;
+      font: bold 8px Verdana, Arial, sans-serif;
+      line-height: 1.05;
+    }
+    #panel-datos-medicos,
+    #panel-datos-extracurriculares,
+    #panel-kardex,
+    #panel-datos-personales {
+      padding-top: 0;
+      min-height: 510px;
+    }
+    #panel-datos-medicos h3 {
+      text-align: center;
+      font: bold 13px Verdana, Arial, sans-serif !important;
+      color: #b00000 !important;
+      margin: 16px 0 28px !important;
+    }
+    .student-info-row {
+      margin: 0 28px 16px;
+      gap: 26px;
+      font: normal 11px Verdana, Arial, sans-serif;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+    .student-info-row .foto-small img {
+      width: 156px;
+      height: 186px;
+      object-fit: cover;
+      border: 2px solid #333;
+    }
+    .medico-block {
+      margin: 0 auto 0;
+      width: 86%;
+    }
+    .medico-block h4,
+    .semestre-title {
+      background: #990000;
+      color: #fff;
+      padding: 3px 6px;
+      font: bold 11px Verdana, Arial, sans-serif;
+      text-align: center;
+    }
+    .medico-table {
+      border-collapse: collapse;
+      font: normal 10px Verdana, Arial, sans-serif;
+      margin-bottom: 0;
+    }
+    .medico-table th,
+    .medico-table td {
+      border: 0;
+      padding: 8px 8px;
+      text-align: left;
+    }
+    .medico-table th {
+      width: 42%;
+      background: #fff;
+      color: #990000;
+    }
+    .empty-data {
+      margin: 80px -9px 0;
+      padding: 58px 20px;
+      border: 0;
+      border-top: 2px solid #a0a0a0;
+      border-bottom: 2px solid #a0a0a0;
+      background: #e5e5e5;
+      color: red;
+      font: bold 12px Verdana, Arial, sans-serif;
+    }
+    #panel-datos-extracurriculares h3 {
+      text-align: center;
+      font: bold 14px Verdana, Arial, sans-serif !important;
+      margin: 28px 0 88px !important;
+    }
+    .kardex-doc {
+      width: 405px;
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 14px 24px;
+      background: #fff;
+      font: normal 10px Verdana, Arial, sans-serif;
+    }
+    .kardex-header .k-logos {
+      min-height: 64px;
+      align-items: flex-start;
+    }
+    .kardex-info {
+      margin: 4px 0;
+      font-size: 11px;
+      line-height: 2;
+    }
+    .kardex-divider {
+      border-top: 4px solid #7a1645;
+      margin: 6px 0 10px;
+    }
+    .kardex-summary {
+      gap: 52px;
+      margin: 12px 0 12px;
+      font-size: 11px;
+    }
+    .kardex-disclaimer {
+      text-align: left;
+      color: #333;
+      margin: 12px 0;
+      font-size: 11px;
+    }
+    .kardex-table {
+      min-width: 660px;
+      font-size: 9px;
+      border-collapse: collapse;
+    }
+    .kardex-table th {
+      background: #fff;
+      border: 0;
+      padding: 4px 3px;
+      font-size: 9px;
+    }
+    .kardex-table td {
+      border: 0;
+      border-top: 1px solid #8ed2d9;
+      padding: 3px 4px;
+    }
+    .kardex-table tr:nth-child(even) {
+      background: #e7f4f6;
+    }
+    .gov-footer {
+      min-height: 230px;
+      padding: 12px 82px;
+      background: #69103a;
+      font: normal 11px Arial, Helvetica, sans-serif;
+    }
+    .gov-footer-grid {
+      max-width: 460px;
+      grid-template-columns: 90px 110px 100px 100px;
+      gap: 12px;
+    }
+    .gov-footer h4 {
+      font: bold 12px Arial, Helvetica, sans-serif;
+      margin-bottom: 7px;
+    }
+    .gov-footer ul li,
+    .gov-footer p {
+      margin-bottom: 5px;
+      line-height: 1.25;
+    }
+    .gov-header .gov-logo {
+      padding-left: 0;
+      width: 112px;
+      line-height: 1;
+    }
+    .gov-header .gov-logo::before {
+      content: none;
+      display: none;
+    }
+    .gov-logo-img {
+      display: block;
+      width: 105px;
+      height: auto;
+    }
+    .gov-footer .gov-logo-img {
+      width: 102px;
+      filter: brightness(0) invert(1);
+    }
+    .inst-logo-img {
+      display: block;
+      width: 36px;
+      height: 44px;
+      object-fit: contain;
+    }
+    .inst-cecyt-img {
+      display: block;
+      width: 47px;
+      height: 47px;
+      object-fit: contain;
+      border-radius: 50%;
+      background: #fff;
+    }
+    .inst-header .inst-icons .icon-circle {
+      background: transparent;
+      border: 0;
+      padding: 0;
+    }
+    .inst-header .ipn-logo,
+    .mini-logo {
+      text-shadow: none;
+    }
+    .doc-logo-img {
+      display: block;
+      width: 62px;
+      height: 62px;
+      object-fit: contain;
+    }
+    .doc-logo-img.ipn-doc {
+      width: 56px;
+      height: 62px;
+    }
+    .login-main {
+      position: relative;
+    }
+    .login-students-img {
+      position: absolute;
+      top: 27px;
+      right: 14px;
+      width: 59px;
+      height: 56px;
+      object-fit: cover;
+      border: 1px solid #c3c3c3;
+    }
+    .footer-brand {
+      margin-bottom: 8px;
+    }
+
+    @media (max-width: 760px) {
+      .page-wrapper {
+        border: 0;
+        max-width: 100%;
+      }
+      .gov-header {
+        min-height: 64px;
+        padding: 8px 12px;
+      }
+      .gov-header .gov-logo {
+        font-size: 16px;
+        padding-left: 44px;
+      }
+      .gov-header .gov-logo::before {
+        width: 34px;
+        height: 34px;
+      }
+      .gov-header nav {
+        margin-top: 18px;
+        gap: 10px;
+        font-size: 11px;
+      }
+      .inst-header {
+        min-height: 68px;
+        padding: 0 6px;
+        border-top-width: 4px;
+      }
+      .inst-header .ipn-logo {
+        width: 42px;
+        height: 42px;
+        font-size: 15px;
+        padding-top: 9px;
+      }
+      .inst-header .inst-title {
+        font-size: 9px;
+      }
+      .inst-header .inst-icons {
+        width: 54px;
+      }
+      .inst-header .inst-icons .icon-circle {
+        width: 34px;
+        height: 34px;
+        font-size: 7px;
+      }
+      .inst-header .inst-icons .icon-sm {
+        display: none;
+      }
+      .top-nav {
+        height: auto;
+        padding-left: 0;
+        overflow-x: auto;
+      }
+      .top-nav a {
+        padding: 7px 10px;
+        font-size: 10px;
+      }
+      .content-area {
+        padding: 0 4px 6px;
+      }
+      #view-login .breadcrumb,
+      .breadcrumb {
+        padding-left: 6px;
+      }
+      #view-login .login-container {
+        min-height: auto;
+        flex-direction: column;
+      }
+      #view-login .login-sidebar {
+        width: 100%;
+        max-width: none;
+        padding: 14px;
+        border-right: 0;
+        border-bottom: 1px solid #c9c9c9;
+      }
+      #view-login input[type="text"],
+      #view-login input[type="password"] {
+        width: 100%;
+        max-width: 100%;
+      }
+      #view-login .login-main {
+        min-height: auto;
+        padding: 10px 6px;
+      }
+      .login-main .desc {
+        width: 100%;
+        font-size: 12px;
+        margin-bottom: 14px;
+        padding-bottom: 14px;
+      }
+      .aviso-box {
+        font-size: 11px;
+      }
+      .portal-layout {
+        min-height: auto;
+        flex-direction: column;
+      }
+      .menu-toggle {
+        display: block;
+        background: #ff9900;
+        color: #fff;
+        font-size: 12px;
+      }
+      .sidebar {
+        display: none;
+        width: 100%;
+        max-width: none;
+      }
+      .sidebar.open {
+        display: block;
+      }
+      .main-panel {
+        margin: 0;
+        min-height: auto;
+        padding: 0 4px 10px;
+      }
+      .quick-access {
+        width: 100%;
+        max-width: none;
+        margin-top: 0;
+      }
+      #panel-menu {
+        min-height: auto;
+        padding: 18px 8px;
+      }
+      .menu-principal h2 {
+        margin: 0 0 38px;
+        text-align: center;
+      }
+      .menu-principal .aviso-section,
+      .alerta-banner {
+        width: 100%;
+      }
+      .datos-layout {
+        margin: 0 6px;
+      }
+      .tab-content {
+        padding: 14px 8px;
+      }
+      .medico-block {
+        width: 100%;
+      }
+      .kardex-doc {
+        padding: 8px 4px;
+      }
+      .gov-footer {
+        padding: 18px 14px;
+        min-height: auto;
+      }
+      .gov-footer-grid {
+        grid-template-columns: 1fr;
+      }
+      .login-students-img {
+        position: static;
+        display: block;
+        width: 96px;
+        height: 64px;
+        margin: 0 0 10px auto;
+      }
+      .gov-logo-img {
+        width: 92px;
+      }
+      .inst-logo-img {
+        width: 32px;
+        height: 38px;
+      }
+      .inst-cecyt-img {
+        width: 34px;
+        height: 34px;
+      }
+    }
+
+    /* ===== MOBILE SAES LAYOUT ===== */
+    @media (max-width: 620px) {
+      html,
+      body {
+        width: 100%;
+        min-width: 0;
+        overflow-x: hidden;
+        background: #8a8a8a;
+      }
+
+      .page-wrapper {
+        width: 100%;
+        max-width: none;
+        min-width: 0;
+        border: 0;
+        box-shadow: none;
+      }
+
+      .gov-header {
+        min-height: 54px;
+        padding: 8px 12px;
+      }
+
+      .gov-header .gov-logo {
+        width: auto;
+      }
+
+      .gov-logo-img {
+        width: 118px;
+      }
+
+      .gov-header nav {
+        margin-top: 0;
+        gap: 12px;
+        font-size: 10px;
+        white-space: nowrap;
+      }
+
+      .inst-header {
+        min-height: 64px;
+        padding: 6px 8px;
+        gap: 8px;
+      }
+
+      .inst-header .ipn-logo {
+        width: 42px;
+        height: 48px;
+        padding: 0;
+        flex: 0 0 42px;
+      }
+
+      .inst-logo-img {
+        width: 38px;
+        height: 48px;
+      }
+
+      .inst-header .inst-title {
+        margin-top: 0;
+        font-size: 8.5px;
+        line-height: 1.25;
+      }
+
+      .inst-header .inst-icons {
+        width: 44px;
+        flex: 0 0 44px;
+      }
+
+      .inst-cecyt-img {
+        width: 38px;
+        height: 38px;
+      }
+
+      .top-nav {
+        height: auto;
+        padding-left: 0;
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        scrollbar-width: thin;
+      }
+
+      .top-nav a {
+        flex: 0 0 auto;
+        padding: 7px 10px;
+        font-size: 9px;
+      }
+
+      .content-area {
+        padding: 0 5px 6px;
+      }
+
+      .breadcrumb,
+      #view-login .breadcrumb {
+        padding: 6px 4px;
+        white-space: normal;
+        line-height: 1.35;
+      }
+
+      #view-login .login-container {
+        display: block;
+        min-height: 0;
+      }
+
+      #view-login .login-sidebar {
+        width: 100%;
+        max-width: none;
+        padding: 14px 12px 16px;
+        border-right: 0;
+        border-bottom: 1px solid #c9c9c9;
+      }
+
+      #view-login .login-sidebar h2 {
+        margin-bottom: 12px;
+        font-size: 13px;
+      }
+
+      #view-login label {
+        margin-top: 8px;
+        font-size: 11px;
+      }
+
+      #view-login input[type="text"],
+      #view-login input[type="password"] {
+        width: 100%;
+        max-width: none;
+        height: 30px;
+        margin-bottom: 8px;
+        font-size: 14px;
+      }
+
+      .captcha-box {
+        justify-content: flex-start;
+        margin: 8px 0;
+      }
+
+      .captcha-img {
+        width: 104px;
+        height: 38px;
+      }
+
+      .btn-iniciar {
+        float: none;
+        margin: 8px 0 0 auto;
+        padding: 6px 14px;
+        font-size: 12px;
+      }
+
+      #view-login .login-main {
+        min-height: 0;
+        padding: 12px 8px 8px;
+      }
+
+      .login-students-img {
+        position: static;
+        float: right;
+        width: 72px;
+        height: 58px;
+        margin: 0 0 8px 10px;
+      }
+
+      .login-main h1 {
+        margin: 2px 0 10px;
+        font-size: 13px;
+        line-height: 1.25;
+      }
+
+      .login-main .desc {
+        width: 100%;
+        margin-bottom: 14px;
+        padding: 0 86px 14px 0;
+        font-size: 11px;
+        line-height: 1.4;
+        text-align: center;
+      }
+
+      .login-main .hero-row > div {
+        max-width: 100%;
+      }
+
+      .aviso-box {
+        max-width: 100%;
+        padding: 5px 6px;
+        font-size: 10px;
+        line-height: 1.2;
+      }
+
+      .portal-layout {
+        display: block;
+        min-height: 0;
+      }
+
+      .menu-toggle {
+        display: block;
+        padding: 9px 12px;
+        border: 1px solid #cc7a00;
+        font-size: 12px;
+      }
+
+      .sidebar {
+        display: none;
+        width: 100%;
+        max-width: none;
+        font-size: 10px;
+      }
+
+      .sidebar.open {
+        display: block;
+      }
+
+      .sidebar .menu-title,
+      .sidebar .menu-single,
+      .sidebar .menu-item {
+        min-height: 24px;
+        line-height: 22px;
+      }
+
+      .sidebar .menu-title,
+      .sidebar .menu-single {
+        padding-left: 12px;
+      }
+
+      .sidebar .menu-item {
+        padding-left: 28px;
+      }
+
+      .sidebar .logout-box {
+        margin: 12px 8px;
+      }
+
+      .main-panel {
+        width: 100%;
+        min-height: 0;
+        margin: 0;
+        padding: 0 5px 10px;
+        overflow: visible;
+      }
+
+      .quick-access {
+        display: none;
+      }
+
+      #panel-menu,
+      #panel-datos-medicos,
+      #panel-datos-extracurriculares,
+      #panel-kardex,
+      #panel-datos-personales {
+        min-height: 0;
+        padding-bottom: 14px;
+      }
+
+      #panel-menu {
+        padding: 18px 8px;
+      }
+
+      .menu-principal h2 {
+        margin: 0 0 30px;
+        text-align: center;
+        font-size: 11px;
+      }
+
+      .menu-principal .saludo {
+        margin-bottom: 28px;
+        font-size: 10px;
+        line-height: 1.35;
+      }
+
+      .menu-principal .aviso-section {
+        width: 100%;
+        padding: 10px 6px;
+      }
+
+      .menu-principal .aviso-section h3 {
+        margin-left: 0;
+        text-align: center;
+        font-size: 24px;
+      }
+
+      .alerta-banner {
+        width: 100%;
+        padding: 10px 8px;
+        font-size: 9px;
+      }
+
+      .alerta-banner h3 {
+        font-size: 22px;
+        letter-spacing: 7px;
+      }
+
+      .doc-header {
+        margin: 10px 4px 12px;
+        gap: 6px;
+      }
+
+      .doc-header .mini-logo {
+        width: 42px;
+        height: 48px;
+        flex: 0 0 42px;
+      }
+
+      .doc-logo-img,
+      .doc-logo-img.ipn-doc {
+        width: 40px;
+        height: 46px;
+      }
+
+      .doc-header .doc-title {
+        font-size: 9px;
+        line-height: 1.35;
+      }
+
+      .datos-layout {
+        display: block;
+        margin: 0 5px;
+      }
+
+      .foto-col {
+        width: 116px;
+        max-width: 116px;
+        margin: 0 auto 12px;
+      }
+
+      .foto-col img {
+        width: 116px;
+        height: 142px;
+      }
+
+      .tabs-row {
+        width: 100%;
+        overflow-x: auto;
+        padding-bottom: 1px;
+      }
+
+      .tabs-row button {
+        flex: 0 0 auto;
+        padding: 6px 8px;
+        font-size: 10px;
+      }
+
+      .tab-content {
+        min-height: 0;
+        padding: 12px 8px;
+      }
+
+      .datos-table,
+      .datos-table tbody,
+      .datos-table tr,
+      .datos-table td {
+        display: block;
+        width: 100%;
+      }
+
+      .datos-table td {
+        padding: 3px 2px;
+      }
+
+      .datos-table td:first-child {
+        width: 100%;
+        padding-top: 8px;
+      }
+
+      .student-info-row {
+        margin: 0 8px 16px;
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+      }
+
+      .student-info-row .foto-small img {
+        width: 92px;
+        height: 114px;
+      }
+
+      .medico-block {
+        width: 100%;
+      }
+
+      .medico-grid {
+        display: block;
+      }
+
+      .medico-table th,
+      .medico-table td {
+        padding: 6px 6px;
+      }
+
+      .empty-data {
+        margin: 30px -5px 0;
+        padding: 42px 12px;
+      }
+
+      .kardex-doc {
+        width: 100%;
+        max-width: 100%;
+        padding: 8px 2px;
+      }
+
+      .kardex-header .k-logos {
+        gap: 6px;
+      }
+
+      .kardex-header .k-logos > div:nth-child(2) {
+        font-size: 9px !important;
+        line-height: 1.25;
+      }
+
+      .kardex-info,
+      .kardex-summary,
+      .kardex-disclaimer {
+        padding: 0 4px;
+      }
+
+      .kardex-summary {
+        display: block;
+        line-height: 1.8;
+      }
+
+      .kardex-table-wrap {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .kardex-table {
+        min-width: 580px;
+      }
+
+      .portal-footer,
+      .login-footer {
+        height: auto;
+        min-height: 22px;
+        padding: 4px 6px;
+        line-height: 1.4;
+      }
+
+      .gov-footer {
+        padding: 16px 14px;
+      }
+
+      .gov-footer-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        max-width: none;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .inst-header .inst-title {
+        font-size: 7.8px;
+      }
+
+      .login-main .desc {
+        padding-right: 0;
+        clear: both;
+      }
+
+      .login-students-img {
+        float: none;
+        margin: 0 auto 8px;
+      }
+
+      .student-info-row {
+        display: block;
+      }
+
+      .student-info-row .foto-small {
+        margin-top: 12px;
+        text-align: center;
+      }
+    }
+
+    /* ===== FINAL SAES REFERENCE LAYOUT ===== */
+    .page-wrapper {
+      max-width: 895px;
+      background: #dedede;
+    }
+
+    .inst-header {
+      min-height: 66px;
+      padding: 0 10px 0 14px;
+    }
+
+    .inst-header .ipn-logo {
+      width: 58px;
+      height: 60px;
+      padding: 0;
+      flex: 0 0 58px;
+    }
+
+    .inst-logo-img {
+      width: 54px;
+      height: 60px;
+    }
+
+    .inst-header .inst-title {
+      font-size: 12px;
+      line-height: 1.3;
+      margin-top: 0;
+    }
+
+    .inst-header .inst-icons {
+      width: 92px;
+      flex: 0 0 92px;
+    }
+
+    .inst-cecyt-img {
+      width: 52px;
+      height: 52px;
+    }
+
+    .inst-header .inst-icons .icon-sm {
+      display: flex;
+    }
+
+    .top-nav {
+      height: 25px;
+      padding-left: 143px !important;
+      flex-wrap: nowrap;
+      overflow: hidden;
+    }
+
+    .top-nav a {
+      flex: 0 1 auto;
+      padding: 5px 11px 4px;
+      font-size: 10px;
+      line-height: 14px;
+      text-align: center;
+    }
+
+    .content-area {
+      padding: 0 0 6px;
+    }
+
+    .portal-layout {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-items: stretch;
+      min-height: 720px;
+      background: #dedede;
+    }
+
+    .menu-toggle {
+      display: none !important;
+    }
+
+    .sidebar,
+    .sidebar.open {
+      display: block !important;
+      width: 144px;
+      max-width: 144px;
+      flex: 0 0 144px;
+      font-size: 10px;
+      border-right: 1px solid #cfcfcf;
+    }
+
+    .sidebar .menu-title,
+    .sidebar .menu-single,
+    .sidebar .menu-item {
+      min-height: 17px;
+      line-height: 15px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: clip;
+    }
+
+    .sidebar .menu-title,
+    .sidebar .menu-single {
+      padding-left: 14px;
+    }
+
+    .sidebar .menu-item {
+      padding-left: 32px;
+    }
+
+    .main-panel {
+      flex: 1 1 auto;
+      min-width: 0;
+      min-height: 582px;
+      margin: 0 6px 0 4px;
+      padding: 0 4px 10px;
+      overflow: visible;
+    }
+
+    .quick-access {
+      display: block;
+      width: 138px;
+      max-width: 138px;
+      flex: 0 0 138px;
+      margin: 13px 4px 0 0;
+      padding: 11px 8px;
+      font-size: 9px;
+    }
+
+    .quick-access h4 {
+      font-size: 12px;
+      margin-bottom: 9px;
+    }
+
+    .breadcrumb {
+      padding: 6px 0 7px 18px;
+      font-size: 10px;
+    }
+
+    .doc-header {
+      margin: 17px 26px 20px;
+      gap: 15px;
+    }
+
+    .doc-header .mini-logo {
+      width: 70px;
+      height: 75px;
+      flex: 0 0 70px;
+    }
+
+    .doc-logo-img,
+    .doc-logo-img.ipn-doc {
+      width: 64px;
+      height: 72px;
+    }
+
+    .doc-header .doc-title {
+      font-size: 12px;
+      line-height: 1.3;
+    }
+
+    .datos-layout {
+      display: flex;
+      flex-wrap: nowrap;
+      margin: 0 26px;
+      gap: 16px;
+    }
+
+    .foto-col {
+      width: 118px;
+      flex: 0 0 118px;
+      margin: 0;
+      text-align: center;
+    }
+
+    .foto-col img {
+      width: 118px;
+      height: 140px;
+      object-fit: cover;
+    }
+
+    .tabs-row {
+      width: 100%;
+      overflow: visible;
+      flex-wrap: nowrap;
+    }
+
+    .tabs-row button {
+      padding: 3px 7px;
+      font-size: 10px;
+    }
+
+    .tab-content {
+      min-height: 250px;
+      padding: 24px 58px;
+    }
+
+    .datos-table,
+    .datos-table tbody,
+    .datos-table tr {
+      display: table;
+      width: 100%;
+    }
+
+    .datos-table td {
+      display: table-cell;
+      width: auto;
+      padding: 5px 8px;
+      font-size: 12px;
+    }
+
+    .datos-table td:first-child {
+      width: 82px;
+      padding-top: 5px;
+    }
+
+    .legal-text {
+      margin: 22px 0 0;
+      padding: 0 0 0 0;
+    }
+
+    .kardex-doc {
+      width: 100%;
+      max-width: 610px;
+    }
+
+    @media (max-width: 760px) {
+      .page-wrapper {
+        max-width: 100%;
+        min-width: 0;
+      }
+
+      .inst-header {
+        min-height: 60px;
+        padding: 0 6px;
+      }
+
+      .inst-header .ipn-logo {
+        width: 45px;
+        height: 54px;
+        flex-basis: 45px;
+      }
+
+      .inst-logo-img {
+        width: 42px;
+        height: 54px;
+      }
+
+      .inst-header .inst-title {
+        font-size: clamp(8px, 1.55vw, 11px);
+      }
+
+      .inst-header .inst-icons {
+        width: 72px;
+        flex-basis: 72px;
+        gap: 4px;
+      }
+
+      .inst-cecyt-img {
+        width: 42px;
+        height: 42px;
+      }
+
+      .top-nav {
+        padding-left: 112px !important;
+        height: auto;
+      }
+
+      .top-nav a {
+        padding: 5px 6px 4px;
+        font-size: clamp(7px, 1.35vw, 9px);
+        line-height: 13px;
+        white-space: nowrap;
+      }
+
+      .sidebar,
+      .sidebar.open {
+        width: 112px;
+        max-width: 112px;
+        flex-basis: 112px;
+        font-size: 8px;
+      }
+
+      .sidebar .menu-title,
+      .sidebar .menu-single,
+      .sidebar .menu-item {
+        min-height: 16px;
+        line-height: 14px;
+      }
+
+      .sidebar .menu-title,
+      .sidebar .menu-single {
+        padding-left: 8px;
+      }
+
+      .sidebar .menu-item {
+        padding-left: 22px;
+      }
+
+      .main-panel {
+        margin: 0 4px;
+        padding: 0 3px 8px;
+      }
+
+      .quick-access {
+        width: 104px;
+        max-width: 104px;
+        flex-basis: 104px;
+        padding: 9px 6px;
+        font-size: 8px;
+      }
+
+      .doc-header {
+        margin: 13px 10px 16px;
+        gap: 8px;
+      }
+
+      .doc-header .mini-logo {
+        width: 46px;
+        height: 52px;
+        flex-basis: 46px;
+      }
+
+      .doc-logo-img,
+      .doc-logo-img.ipn-doc {
+        width: 44px;
+        height: 52px;
+      }
+
+      .doc-header .doc-title {
+        font-size: clamp(8px, 1.55vw, 10px);
+      }
+
+      .datos-layout {
+        margin: 0 10px;
+        gap: 12px;
+      }
+
+      .foto-col {
+        width: 96px;
+        flex-basis: 96px;
+      }
+
+      .foto-col img {
+        width: 96px;
+        height: 118px;
+      }
+
+      .tabs-row {
+        overflow-x: visible;
+      }
+
+      .tabs-row button {
+        padding: 3px 5px;
+        font-size: clamp(7px, 1.35vw, 9px);
+      }
+
+      .tab-content {
+        padding: 18px 26px;
+      }
+
+      .datos-table td {
+        font-size: clamp(8px, 1.55vw, 11px);
+      }
+    }
+
+    @media (max-width: 560px) {
+      .quick-access {
+        display: none;
+      }
+
+      .top-nav {
+        padding-left: 92px !important;
+      }
+
+      .top-nav a {
+        padding-left: 4px;
+        padding-right: 4px;
+        font-size: 7px;
+      }
+
+      .sidebar,
+      .sidebar.open {
+        width: 92px;
+        max-width: 92px;
+        flex-basis: 92px;
+        font-size: 7px;
+      }
+
+      .sidebar .menu-title,
+      .sidebar .menu-single {
+        padding-left: 5px;
+      }
+
+      .sidebar .menu-item {
+        padding-left: 15px;
+      }
+
+      .doc-header {
+        margin-left: 4px;
+        margin-right: 4px;
+      }
+
+      .datos-layout {
+        margin: 0 4px;
+        gap: 8px;
+      }
+
+      .foto-col {
+        width: 78px;
+        flex-basis: 78px;
+      }
+
+      .foto-col img {
+        width: 78px;
+        height: 96px;
+      }
+
+      .tab-content {
+        padding: 12px 8px;
+      }
+    }
+
+    /* ===== PHONE LOGIN MUST MATCH SAES SCREENSHOT ===== */
+    @media (max-width: 620px) {
+      body {
+        min-width: 0;
+        overflow-x: hidden;
+      }
+
+      #view-login {
+        width: 100%;
+      }
+
+      #view-login .breadcrumb {
+        padding-left: 82px;
+        height: 22px;
+        font-size: 9px;
+        line-height: 12px;
+        color: #888;
+      }
+
+      #view-login .login-container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        min-height: 283px;
+        border: 1px solid #b6b6b6;
+        background: #fff;
+      }
+
+      #view-login .login-sidebar {
+        width: 80px;
+        max-width: 80px;
+        flex: 0 0 80px;
+        padding: 11px 6px 0;
+        border-right: 1px solid #c9c9c9;
+        border-bottom: 0;
+        background: #fff;
+      }
+
+      #view-login .login-sidebar h2 {
+        margin-bottom: 11px;
+        font-size: 9px;
+        line-height: 11px;
+      }
+
+      #view-login label {
+        margin: 0 0 3px;
+        font-size: 8px;
+        line-height: 10px;
+      }
+
+      #view-login input[type="text"],
+      #view-login input[type="password"] {
+        width: 52px;
+        max-width: 52px;
+        height: 13px;
+        margin: 0 0 10px;
+        padding: 1px 2px;
+        font-size: 9px;
+      }
+
+      #view-login .captcha-box {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+        margin: 2px 0 5px;
+      }
+
+      #view-login .captcha-img {
+        width: 48px;
+        height: 28px;
+        padding: 3px 2px;
+        font-size: 18px;
+        letter-spacing: -2px;
+      }
+
+      #view-login .captcha-box button {
+        width: 16px;
+        height: 16px;
+        padding: 0;
+        font-size: 12px !important;
+        line-height: 14px;
+      }
+
+      #view-login .btn-iniciar {
+        margin: 3px 0 0 auto;
+        padding: 2px 5px;
+        min-height: 15px;
+        font-size: 8px;
+        line-height: 10px;
+      }
+
+      #view-login .login-main {
+        flex: 1 1 auto;
+        min-width: 0;
+        min-height: 281px;
+        padding: 6px 8px 0;
+        border-left: 1px solid #efefef;
+      }
+
+      #view-login .login-students-img {
+        position: absolute;
+        float: none;
+        top: 23px;
+        right: 10px;
+        width: 44px;
+        height: 44px;
+        margin: 0;
+        object-fit: cover;
+      }
+
+      #view-login .login-main h1 {
+        margin: 1px 0 12px;
+        font-size: 10px;
+        line-height: 13px;
+      }
+
+      #view-login .login-main .desc {
+        width: calc(100% - 54px);
+        margin: 0 auto 16px;
+        padding: 0 0 13px;
+        clear: none;
+        border-bottom: 3px solid #7a1645;
+        font-size: 9px;
+        line-height: 1.35;
+        text-align: center;
+      }
+
+      #view-login .login-main .hero-row {
+        display: block;
+        margin: 0;
+      }
+
+      #view-login .login-main .hero-row > div {
+        max-width: 100%;
+      }
+
+      #view-login .aviso-box {
+        max-width: 260px;
+        margin: 0 auto 3px;
+        padding: 2px 5px;
+        font-size: 8px;
+        line-height: 1.05;
+      }
+
+      #view-login .aviso-box .url-orange {
+        font-size: 5px;
+      }
+
+      #view-login .login-footer {
+        height: 16px;
+        min-height: 16px;
+        margin-top: 93px;
+        padding: 1px 3px;
+        font-size: 8px;
+        line-height: 12px;
+      }
+
+      #govFooter {
+        min-height: 178px;
+        padding: 10px 58px;
+      }
+
+      #govFooter .gov-footer-grid {
+        display: grid;
+        grid-template-columns: 78px 90px 90px 86px;
+        gap: 9px;
+        max-width: 344px;
+      }
+
+      #govFooter .gov-logo-img {
+        width: 72px;
+      }
+
+      #govFooter h4 {
+        margin-bottom: 5px;
+        font-size: 9px;
+        line-height: 10px;
+      }
+
+      #govFooter,
+      #govFooter p,
+      #govFooter li,
+      #govFooter a {
+        font-size: 7px;
+        line-height: 1.25;
+      }
+
+      #govFooter ul li,
+      #govFooter p {
+        margin-bottom: 4px;
+      }
+
+      #govFooter .social span {
+        width: 14px;
+        height: 14px;
+        font-size: 8px;
+      }
+    }
+
+    @media (max-width: 430px) {
+      .page-wrapper {
+        max-width: 100%;
+      }
+
+      .gov-header {
+        min-height: 38px;
+        padding: 5px 56px 5px 66px;
+      }
+
+      .gov-header .gov-logo-img {
+        width: 82px;
+      }
+
+      .gov-header nav {
+        gap: 12px;
+        font-size: 7px;
+      }
+
+      .inst-header {
+        min-height: 42px;
+        padding: 0 6px;
+        border-top-width: 4px;
+      }
+
+      .inst-header .ipn-logo {
+        width: 38px;
+        height: 40px;
+        flex-basis: 38px;
+      }
+
+      .inst-logo-img {
+        width: 34px;
+        height: 40px;
+      }
+
+      .inst-header .inst-title {
+        font-size: 7px;
+      }
+
+      .inst-header .inst-icons {
+        width: 58px;
+        flex-basis: 58px;
+      }
+
+      .inst-cecyt-img {
+        width: 34px;
+        height: 34px;
+      }
+
+      .inst-header .inst-icons .icon-sm {
+        width: 12px;
+        font-size: 12px;
+      }
+
+      .top-nav {
+        height: 22px;
+        padding-left: 80px !important;
+      }
+
+      .top-nav a {
+        padding: 4px 4px 3px;
+        font-size: 6px;
+        line-height: 12px;
+      }
+
+      .content-area {
+        padding: 0 6px 0;
+      }
+
+      #view-login .login-sidebar {
+        width: 74px;
+        max-width: 74px;
+        flex-basis: 74px;
+      }
+
+      #view-login .aviso-box {
+        max-width: 250px;
+      }
+
+      #govFooter {
+        padding-left: 58px;
+        padding-right: 42px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page-wrapper">
+
+  <!-- GOV HEADER -->
+  <header class="gov-header" id="govHeader">
+    <div class="gov-logo">
+      <img class="gov-logo-img" src="gobierno_mexico.svg" alt="Gobierno de México">
+    </div>
+    <nav>
+      <a href="#">Trámites</a>
+      <a href="#">Gobierno</a>
+      <span class="search-icon">Buscar</span>
+    </nav>
+  </header>
+
+  <!-- INSTITUTION HEADER -->
+  <div class="inst-header">
+    <div class="ipn-logo"><img class="inst-logo-img" src="logo_ipn.png" alt="IPN"></div>
+    <div class="inst-title">
+      CENTRO DE ESTUDIOS CIENTÍFICOS Y TECNOLÓGICOS No. 3<br>
+      ESTANISLAO RAMIREZ RUIZ
+    </div>
+    <div class="inst-icons">
+      <div class="icon-circle"><img class="inst-cecyt-img" src="cecyt_logo.png" alt="CECyT 3"></div>
+      <div class="icon-sm">@</div>
+      <div class="icon-sm">::</div>
+    </div>
+  </div>
+
+  <!-- TOP NAV -->
+  <nav class="top-nav" id="topNav">
+    <a data-tab="inicio" class="active" onclick="setTopTab('inicio')">Inicio</a>
+    <a data-tab="actividades" onclick="setTopTab('actividades')">Actividades Culturales</a>
+    <a data-tab="alumnos" onclick="setTopTab('alumnos')">Alumnos</a>
+    <a data-tab="academica" onclick="setTopTab('academica')">Académica</a>
+    <a data-tab="reglamento" onclick="setTopTab('reglamento')">Reglamento</a>
+    <a data-tab="ayuda" onclick="setTopTab('ayuda')">Ayuda</a>
+    <a data-tab="recuperar" onclick="setTopTab('recuperar')">Recuperar Contraseña</a>
+  </nav>
+
+  <div class="content-area">
+
+    <!-- ========== LOGIN VIEW ========== -->
+    <div id="view-login">
+      <div class="breadcrumb">Inicio</div>
+      <div class="login-container">
+        <div class="login-sidebar">
+          <h2>Iniciar Sesion</h2>
+          <label for="usuario">Usuario:</label>
+          <input type="text" id="usuario" autocomplete="username">
+          <label for="password">Password:</label>
+          <input type="password" id="password" autocomplete="current-password">
+          <label for="captcha">Captcha:</label>
+          <input type="text" id="captcha" maxlength="3">
+          <div class="captcha-box">
+            <div class="captcha-img" id="captchaDisplay">VR9</div>
+            <button type="button" onclick="refreshCaptcha()" style="background:none;border:none;cursor:pointer;font-size:16px;" title="Actualizar">↻</button>
+          </div>
+          <button class="btn-iniciar" onclick="doLogin()">Iniciar</button>
+          <div style="clear:both"></div>
+        </div>
+        <div class="login-main">
+          <img class="login-students-img" src="personas_leyendo.jpg" alt="Estudiantes leyendo">
+          <h1>Sistema de Administración Escolar</h1>
+          <p class="desc">Es la herramienta informática diseñada para apoyar en la consulta y atención de trámites escolares.</p>
+          <div class="hero-row">
+            <div style="flex:1">
+              <div class="aviso-box">
+                <div class="aviso-title">Aviso</div>
+                <p>Se informa a la comunidad politécnica que puede realizar su denuncia de forma segura en el portal <a href="#">denunciasegura.ipn.mx</a></p>
+              </div>
+              <div class="aviso-box">
+                <div class="aviso-title">Aviso</div>
+                <p>Se informa a la comunidad politécnica que puede realizar su orientación y quejas en <a href="#">defensoria.ipn.mx</a></p>
+              </div>
+              <div class="aviso-box">
+                <div class="aviso-title">Aviso</div>
+                <p>Se informa a los alumnos que deben registrar su Número de Seguridad Social (NSS) en el SAES. Consulte: <span class="url-orange">www.imss.gob.mx/patrones/semanas-cotizadas</span></p>
+              </div>
+              <div class="aviso-box">
+                <div class="aviso-title">Aviso</div>
+                <p>Registro de NSS en SAES: <span class="url-orange">saes.ipn.mx → Alumnos → Datos Personales → Datos Médicos</span></p>
+              </div>
+            </div>
+          </div>
+          <div class="login-footer">© 2024 SAES &nbsp; <a href="#">IPN</a> &nbsp; <a href="#">IPN-DAE</a></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== PORTAL VIEWS (hidden until login) ========== -->
+    <div id="view-portal" class="hidden">
+
+      <button class="menu-toggle" onclick="toggleSidebar()">☰ Menú de navegación</button>
+
+      <div class="portal-layout">
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+          <div class="menu-section">
+            <div class="menu-title">Datos Personales</div>
+            <a class="menu-item" data-view="datos-personales" onclick="navigate('datos-personales')">Datos Personales</a>
+            <a class="menu-item" data-view="datos-medicos" onclick="navigate('datos-medicos')">Datos Médicos</a>
+            <a class="menu-item" data-view="datos-extracurriculares" onclick="navigate('datos-extracurriculares')">Datos Extracurriculares</a>
+          </div>
+          <a class="menu-single">Expediente Digital</a>
+          <a class="menu-single">Pase Digital</a>
+          <a class="menu-single">Cambios de Carrera</a>
+          <a class="menu-single">Red Académica ISISA</a>
+          <div class="menu-section">
+            <div class="menu-title">Tramites</div>
+            <a class="menu-item">Solicitud</a>
+            <a class="menu-item">Seguimiento</a>
+            <a class="menu-item">Citas</a>
+          </div>
+          <div class="menu-section">
+            <div class="menu-title">Datos académicos</div>
+            <a class="menu-item" data-view="kardex" onclick="navigate('kardex')">Kárdex</a>
+            <a class="menu-item">Estado General</a>
+            <a class="menu-item">Solicitud Dictamen</a>
+            <a class="menu-item">Dictamen</a>
+          </div>
+          <div class="menu-section">
+            <div class="menu-title">Inscripción Actual</div>
+            <a class="menu-item">Horario</a>
+            <a class="menu-item">Calificaciones</a>
+          </div>
+          <div class="menu-section">
+            <div class="menu-title">Reinscripciones</div>
+            <a class="menu-item">Cita de Reinscripcion</a>
+            <a class="menu-item">Reinscripcion</a>
+            <a class="menu-item">Comprobante</a>
+          </div>
+          <div class="menu-section">
+            <div class="menu-title">ETS</div>
+            <a class="menu-item">Inscribir ETS</a>
+            <a class="menu-item">Calificaciones</a>
+          </div>
+          <div class="menu-section">
+            <div class="menu-title">Saberes Previamente Ad</div>
+            <a class="menu-item">Inscribir Saberes Pre</a>
+            <a class="menu-item">Calificaciones</a>
+          </div>
+          <div class="menu-section">
+            <div class="menu-title">Cursos de Recuperacion</div>
+            <a class="menu-item">Inscribir Cursos de R</a>
+            <a class="menu-item">Calificaciones</a>
+          </div>
+          <div class="menu-section">
+            <div class="menu-title">Tutores</div>
+            <a class="menu-item">Tutor Actual</a>
+            <a class="menu-item">Comentarios</a>
+            <a class="menu-item">Evaluación</a>
+          </div>
+          <div class="menu-section">
+            <div class="menu-title">Evaluacion Profesor</div>
+            <a class="menu-item">Evaluación</a>
+          </div>
+          <a class="menu-single">Correo personal</a>
+          <a class="menu-single">Clave de acceso</a>
+          <div class="logout-box">
+            <a href="#" onclick="doLogout(); return false;">Cerrar sesión</a>
+            <div class="boleta-num">2024031123</div>
+          </div>
+        </aside>
+
+        <!-- MAIN PANEL -->
+        <main class="main-panel" id="mainPanel">
+
+          <!-- MENU PRINCIPAL -->
+          <div id="panel-menu" class="panel-view">
+            <div class="breadcrumb" id="bc-menu">Inicio » Alumnos</div>
+            <div class="menu-principal">
+              <h2>MENÚ PRINCIPAL DE ALUMNOS</h2>
+              <p class="saludo" id="saludo">BUENAS TARDES ELISUA AYELEN MARTÍNEZ HERNÁNDEZ</p>
+              <div class="aviso-section">
+                <h3>AVISO</h3>
+                <p>Se recuerda a los alumnos que su credencial del IPN es su identificación oficial dentro del plantel. En caso de extravío, deberá acudir a la Dirección de Administración Escolar para su reposición.</p>
+                <p style="margin-top:8px;font-size:11px;"><em>Dirección de Administración Escolar</em></p>
+              </div>
+              <div class="alerta-banner">
+                <h3>ALERTA</h3>
+                <p>Se informa a la comunidad estudiantil que la admisión y traslados al IPN únicamente se realizan a través de convocatorias oficiales publicadas en <strong>www.ipn.mx</strong></p>
+                <div class="denuncia">¡DENUNCIA!</div>
+                <p>No confíes en personas que ofrecen "ayuda" o trámites más rápidos a través de redes sociales. Podrías ser víctima de fraude.</p>
+                <div class="footer-yellow">Actúa con honestidad y no seas cómplice de algún DELITO</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- DATOS PERSONALES -->
+          <div id="panel-datos-personales" class="panel-view hidden">
+            <div class="breadcrumb">Inicio » Alumnos » Datos Personales » Datos Personales</div>
+            <div class="doc-header">
+              <div class="mini-logo"><img class="doc-logo-img ipn-doc" src="logo_ipn.png" alt="IPN"></div>
+              <div class="doc-title">CENTRO DE ESTUDIOS CIENTÍFICOS Y TECNOLÓGICOS No. 3<br>ESTANISLAO RAMIREZ RUIZ</div>
+              <div class="mini-logo"><img class="doc-logo-img" src="cecyt_logo.png" alt="CECyT 3"></div>
+            </div>
+            <div class="datos-layout">
+              <div class="foto-col">
+                <img src="foto-datos.jpeg" alt="Foto del alumno">
+                <button class="btn-orange">Imprimir Datos</button>
+              </div>
+              <div style="flex:1;min-width:0">
+                <div class="tabs-row">
+                  <button class="active" onclick="switchTab('generales')">Generales</button>
+                  <button onclick="switchTab('nacimiento')">Nacimiento</button>
+                  <button onclick="switchTab('direccion')">Dirección</button>
+                  <button onclick="switchTab('escolaridad')">Escolaridad</button>
+                  <button onclick="switchTab('padre')">Padre / Tutor</button>
+                </div>
+                <div id="tab-generales" class="tab-content active">
+                  <table class="datos-table">
+                    <tr><td>Boleta:</td><td>2024031123</td></tr>
+                    <tr><td>Nombre:</td><td>MARTÍNEZ HERNÁNDEZ ELISUA AYELEN</td></tr>
+                    <tr><td>Plantel:</td><td>CECYT 3 ESTANISLAO RAMIREZ RUIZ</td></tr>
+                    <tr><td>CURP:</td><td>MAHE080204MDFRRLA8</td></tr>
+                    <tr><td>RFC:</td><td>MAHE080204</td></tr>
+                    <tr><td>Sexo:</td><td>MUJER</td></tr>
+                  </table>
+                </div>
+                <div id="tab-nacimiento" class="tab-content">
+                  <table class="datos-table">
+                    <tr><td>Fecha de nacimiento:</td><td>04/02/2008</td></tr>
+                    <tr><td>País:</td><td>MÉXICO</td></tr>
+                    <tr><td>Entidad:</td><td>CIUDAD DE MÉXICO</td></tr>
+                    <tr><td>Municipio:</td><td>CIUDAD DE MÉXICO</td></tr>
+                    <tr><td>Localidad:</td><td>CIUDAD DE MÉXICO</td></tr>
+                  </table>
+                </div>
+                <div id="tab-direccion" class="tab-content">
+                  <table class="datos-table">
+                    <tr><td>País:</td><td>MÉXICO</td></tr>
+                    <tr><td>Entidad:</td><td>CIUDAD DE MÉXICO</td></tr>
+                    <tr><td>Municipio:</td><td>CIUDAD DE MÉXICO</td></tr>
+                    <tr><td>Localidad:</td><td>CIUDAD DE MÉXICO</td></tr>
+                    <tr><td>Colonia:</td><td>No especificado</td></tr>
+                    <tr><td>Calle:</td><td>No especificado</td></tr>
+                    <tr><td>C.P.:</td><td>No especificado</td></tr>
+                  </table>
+                </div>
+                <div id="tab-escolaridad" class="tab-content">
+                  <table class="datos-table">
+                    <tr><td>Secundaria:</td><td>No especificado</td></tr>
+                    <tr><td>Promedio:</td><td>No especificado</td></tr>
+                    <tr><td>Año de egreso:</td><td>No especificado</td></tr>
+                  </table>
+                </div>
+                <div id="tab-padre" class="tab-content">
+                  <table class="datos-table">
+                    <tr><td>Nombre del padre/tutor:</td><td>No especificado</td></tr>
+                    <tr><td>Teléfono:</td><td>No especificado</td></tr>
+                  </table>
+                </div>
+                <div style="text-align:right;margin-top:12px">
+                  <button class="btn-orange" style="width:auto">Modificar</button>
+                </div>
+              </div>
+            </div>
+            <p class="legal-text">De conformidad con los artículos 15 y 16 de la Ley Federal de Protección de Datos Personales en Posesión de los Particulares, hacemos de su conocimiento que el Instituto Politécnico Nacional con domicilio en Av. Luis Enrique Erro S/N, Unidad Profesional Adolfo López Mateos, Zacatenco, C.P. 07738, Ciudad de México, es responsable de recabar sus datos personales, del uso que se le dé a los mismos y de su protección. Sus datos personales serán utilizados para las finalidades propias de la DAE/SAES.</p>
+          </div>
+
+          <!-- DATOS MEDICOS -->
+          <div id="panel-datos-medicos" class="panel-view hidden">
+            <div class="breadcrumb">Inicio » Alumnos » Datos Personales » Datos Médicos</div>
+            <div class="doc-header">
+              <div class="mini-logo"><img class="doc-logo-img ipn-doc" src="logo_ipn.png" alt="IPN"></div>
+              <div class="doc-title">CENTRO DE ESTUDIOS CIENTÍFICOS Y TECNOLÓGICOS No. 3<br>ESTANISLAO RAMIREZ RUIZ</div>
+              <div class="mini-logo"><img class="doc-logo-img" src="cecyt_logo.png" alt="CECyT 3"></div>
+            </div>
+            <div class="student-info-row">
+              <div><strong>BOLETA:</strong> 2024031123</div>
+              <div><strong>NOMBRE:</strong> ELISUA AYELEN MARTÍNEZ HERNÁNDEZ</div>
+            </div>
+            <h3 style="color:var(--link-red);margin-bottom:12px;font-size:14px">DATOS MÉDICOS DEL ALUMNO</h3>
+
+            <div class="medico-block">
+              <h4>Generales</h4>
+              <table class="medico-table">
+                <tr><th>Peso:</th><td>0.00</td></tr>
+                <tr><th>Estatura:</th><td>0.00</td></tr>
+                <tr><th>Tipo de sangre:</th><td>O+</td></tr>
+              </table>
+            </div>
+            <div class="medico-block">
+              <h4>Afiliación Médica</h4>
+              <table class="medico-table">
+                <tr><th>Institución:</th><td>IMSS</td></tr>
+                <tr><th>Núm Seguridad Social:</th><td>27220859816</td></tr>
+                <tr><th>Fecha de Alta:</th><td></td></tr>
+                <tr><th>Fecha de Baja:</th><td></td></tr>
+              </table>
+            </div>
+            <div class="medico-block">
+              <h4>Integridad Física</h4>
+              <div class="medico-grid">
+                <table class="medico-table">
+                  <tr><th>Padece Enfermedades:</th><td>NO</td></tr>
+                  <tr><th>Problemas Físicos:</th><td>NO</td></tr>
+                  <tr><th>Tatuado:</th><td>NO</td></tr>
+                  <tr><th>Pie Plano:</th><td>NO</td></tr>
+                </table>
+                <table class="medico-table">
+                  <tr><th>Descripción Enfermedad:</th><td>No especificado</td></tr>
+                  <tr><th>Descripción Problema:</th><td>No especificado</td></tr>
+                </table>
+              </div>
+            </div>
+            <div style="text-align:center;margin:12px 0">
+              <button class="btn-orange" style="width:auto">Modificar</button>
+            </div>
+            <p class="legal-text">De conformidad con los artículos 15 y 16 de la Ley Federal de Protección de Datos Personales en Posesión de los Particulares, hacemos de su conocimiento que el Instituto Politécnico Nacional con domicilio en Av. Luis Enrique Erro S/N, Unidad Profesional Adolfo López Mateos, Zacatenco, C.P. 07738, Ciudad de México, es responsable de recabar sus datos personales, del uso que se le dé a los mismos y de su protección.</p>
+          </div>
+
+          <!-- DATOS EXTRACURRICULARES -->
+          <div id="panel-datos-extracurriculares" class="panel-view hidden">
+            <div class="breadcrumb">Inicio » Alumnos » Datos Personales » Datos Extracurriculares</div>
+            <h3 style="margin-bottom:12px;font-size:14px">Actividades extracurriculares del alumno</h3>
+            <div class="student-info-row">
+              <div>
+                <div><strong>BOLETA:</strong> 2024031123</div>
+                <div><strong>NOMBRE:</strong> ELISUA AYELEN MARTÍNEZ HERNÁNDEZ</div>
+              </div>
+              <div class="foto-small">
+                <img src="foto-datos.jpeg" alt="Foto del alumno">
+              </div>
+            </div>
+            <div class="empty-data">No hay datos.</div>
+          </div>
+
+          <!-- KARDEX -->
+          <div id="panel-kardex" class="panel-view hidden">
+            <div class="breadcrumb">Inicio » Alumnos » Datos académicos » Kárdex</div>
+            <div class="kardex-doc">
+              <div class="kardex-header">
+                <div class="k-logos">
+                  <div class="mini-logo"><img class="doc-logo-img ipn-doc" src="logo_ipn.png" alt="IPN"></div>
+                  <div style="font-weight:bold;font-size:11px;text-align:center;flex:1">
+                    CENTRO DE ESTUDIOS CIENTÍFICOS Y TECNOLÓGICOS No. 3<br>
+                    ESTANISLAO RAMIREZ RUIZ
+                  </div>
+                  <div class="mini-logo"><img class="doc-logo-img" src="cecyt_logo.png" alt="CECyT 3"></div>
+                </div>
+              </div>
+              <div class="kardex-info">
+                <div><strong>BOLETA:</strong> 2024031123</div>
+                <div><strong>NOMBRE:</strong> ELISUA AYELEN MARTÍNEZ HERNÁNDEZ</div>
+              </div>
+              <hr class="kardex-divider">
+              <div class="kardex-summary">
+                <div><strong>Carrera:</strong> NIVEL MEDIO SUPERIOR</div>
+                <div><strong>Plan:</strong> 21</div>
+                <div><strong>Promedio:</strong> 8,67</div>
+              </div>
+              <p class="kardex-disclaimer">Este documento es solamente informativo y carece de cualquier validez oficial.</p>
+
+              <div id="kardexTables"></div>
+
+              <p class="kardex-disclaimer">Este documento es solamente informativo y carece de cualquier validez oficial.</p>
+            </div>
+          </div>
+
+        </main>
+
+        <!-- QUICK ACCESS -->
+        <aside class="quick-access">
+          <h4>Accesos rápidos</h4>
+          <a href="#">» Agenda escolar</a>
+          <a href="#">» Horarios de clase</a>
+          <a href="#">» Horarios de ETS</a>
+        </aside>
+      </div>
+
+      <div class="portal-footer">© 2024 SAES &nbsp; <a href="#">IPN</a> &nbsp; <a href="#">IPN-DAE</a></div>
+    </div>
+
+  </div>
+
+  <!-- GOV FOOTER (login only) -->
+  <footer class="gov-footer" id="govFooter">
+    <div class="gov-footer-grid">
+      <div>
+        <div class="footer-brand"><img class="gov-logo-img" src="gobierno_mexico.svg" alt="Gobierno de México"></div>
+      </div>
+      <div>
+        <h4>Enlaces</h4>
+        <ul>
+          <li><a href="#">Datos abiertos de la SABG</a></li>
+          <li><a href="#">Marco Jurídico</a></li>
+          <li><a href="#">Plataforma Nacional de Transparencia</a></li>
+          <li><a href="#">Transparencia para el pueblo</a></li>
+          <li><a href="#">Alerta</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>¿Qué es gob.mx?</h4>
+        <p>Es el portal único de trámites, información y participación ciudadana. <a href="#">Leer más</a></p>
+        <ul style="margin-top:8px">
+          <li><a href="#">Portal de datos abiertos</a></li>
+          <li><a href="#">Declaración de accesibilidad</a></li>
+          <li><a href="#">Términos y Condiciones</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Denuncia contra servidores públicos</h4>
+        <p><a href="#">Denuncia aquí</a></p>
+        <h4 style="margin-top:12px">Síguenos en</h4>
+        <div class="social">
+          <span>f</span><span>X</span><span>📷</span><span>▶</span>
+        </div>
+        <p style="margin-top:8px">📞 079</p>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  const KARDEX_DATA = [
+    {
+      semestre: 'PRIMER SEMESTRE',
+      materias: [
+        ['0101','ÁLGEBRA','Ene 22 2024','24/1','ORD','9'],
+        ['0102','QUÍMICA','Ene 22 2024','24/1','ORD','8'],
+        ['0103','INTRODUCCIÓN A LA COMPUTACIÓN','Ene 22 2024','24/1','ORD','10'],
+        ['0104','LECTURA, REFLEXIÓN Y ESCRITURA','Ene 22 2024','24/1','ORD','9'],
+        ['0105','INGLÉS I','Ene 22 2024','24/1','ORD','8'],
+        ['0106','FILOSOFÍA','Ene 22 2024','24/1','ORD','9'],
+        ['0107','ORIENTACIÓN JUVENIL Y PROFESIONAL I','Ene 22 2024','24/1','ORD','10'],
+        ['0108','MECÁNICA','Ene 22 2024','24/1','ORD','8'],
+        ['0109','COMPUTACIÓN BÁSICA PARA EL AUTODIDACTA','Ene 22 2024','24/1','ORD','10']
+      ]
+    },
+    {
+      semestre: 'SEGUNDO SEMESTRE',
+      materias: [
+        ['0201','GEOMETRÍA Y TRIGONOMETRÍA','Jul 8 2024','24/2','ORD','8'],
+        ['0202','QUÍMICA APLICADA A LA INDUSTRIA','Jul 8 2024','24/2','ORD','9'],
+        ['0203','INTRODUCCIÓN A LA PROGRAMACIÓN','Jul 8 2024','24/2','ORD','10'],
+        ['0204','COMPETENCIA COMUNICATIVA','Jul 8 2024','24/2','ORD','9'],
+        ['0205','INGLÉS II','Jul 8 2024','24/2','ORD','8'],
+        ['0206','HISTORIA','Jul 8 2024','24/2','ORD','9'],
+        ['0207','ORIENTACIÓN JUVENIL Y PROFESIONAL II','Jul 8 2024','24/2','ORD','10'],
+        ['0208','ELECTRICIDAD','Jul 8 2024','24/2','ORD','8']
+      ]
+    },
+    {
+      semestre: 'TERCER SEMESTRE',
+      materias: [
+        ['C301','GEOMETRIA ANALITICA','Ene 20 2025','25/1','ORD','8'],
+        ['C302','FISICA I','Ene 20 2025','25/1','ORD','9'],
+        ['C303','QUIMICA I','Ene 20 2025','25/1','ORD','7'],
+        ['C304','INGLES III','Ene 20 2025','25/1','ORD','6'],
+        ['C305','COMUNICACION CIENTIFICA','Ene 20 2025','25/1','ORD','9'],
+        ['C306','DIBUJO TECNICO I','Ene 20 2025','25/1','ORD','8'],
+        ['C307','ENTORNO SOCIOECONOMICO DE MEXICO','Ene 20 2025','25/1','ORD','9'],
+        ['C308','ALGORITMIA Y PROGRAMACION','Ene 20 2025','25/1','ORD','9'],
+        ['C309','ENSAMBLADO Y SOPORTE DE COMPONENTES ELECTRÓNICOS','Ene 20 2025','25/1','ORD','10'],
+        ['C311','INTEGRACIÓN DE RECURSOS MULTIMEDIA','Ene 20 2025','25/1','ORD','10']
+      ]
+    },
+    {
+      semestre: 'CUARTO SEMESTRE',
+      materias: [
+        ['C401','CALCULO DIFERENCIAL','Jul 7 2025','25/2','ORD','10'],
+        ['C402','FISICA II','Jul 7 2025','25/2','ORD','9'],
+        ['C403','QUIMICA II','Jul 7 2025','25/2','ORD','8'],
+        ['C404','INGLES IV','Jul 7 2025','25/2','ORD','8'],
+        ['C406','DIBUJO TECNICO II','Jul 7 2025','25/2','ORD','10'],
+        ['C407','REDES DE COMUNICACIÓN','Jul 7 2025','25/2','ORD','10'],
+        ['C408','PROGRAMACION MODULAR','Jul 7 2025','25/2','ORD','10'],
+        ['C409','SISTEMAS OPERATIVOS','Jul 7 2025','25/2','ORD','10'],
+        ['C411','APLICACIONES ELECTRÓNICAS COMPUTACIONALES','Jul 7 2025','25/2','ORD','9']
+      ]
+    },
+    {
+      semestre: 'QUINTO SEMESTRE',
+      materias: [
+        ['C501','CALCULO INTEGRAL','Ene 23 2026','26/1','ORD','8'],
+        ['C502','FISICA III','Ene 23 2026','26/1','ORD','8'],
+        ['C503','QUIMICA III','Ene 23 2026','26/1','ORD','8'],
+        ['C504','INGLES V','Ene 23 2026','26/1','ORD','9'],
+        ['C505','ORIENTACION JUVENIL Y PROFESIONAL III','Ene 23 2026','26/1','ORD','10'],
+        ['C506','DESARROLLO DE APLICACIONES CON ENTORNOS GRÁFICOS','Ene 23 2026','26/1','ORD','7']
+      ]
+    }
+  ];
+
+  let currentCaptcha = 'VR9';
+  let loggedIn = false;
+
+  function refreshCaptcha() {
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    currentCaptcha = '';
+    for (let i = 0; i < 3; i++) currentCaptcha += chars[Math.floor(Math.random() * chars.length)];
+    document.getElementById('captchaDisplay').textContent = currentCaptcha;
+  }
+
+  function getSaludo() {
+    const h = new Date().getHours();
+    if (h < 12) return 'BUENOS DÍAS';
+    if (h < 19) return 'BUENAS TARDES';
+    return 'BUENAS NOCHES';
+  }
+
+  function doLogin() {
+    const user = document.getElementById('usuario').value.trim();
+    const pass = document.getElementById('password').value.trim();
+    const cap = document.getElementById('captcha').value.trim().toUpperCase();
+    if (!user || !pass) { alert('Ingrese usuario y contraseña.'); return; }
+    if (cap !== currentCaptcha) { alert('Captcha incorrecto.'); refreshCaptcha(); return; }
+    loggedIn = true;
+    document.getElementById('view-login').classList.add('hidden');
+    document.getElementById('view-portal').classList.remove('hidden');
+    document.getElementById('govHeader').classList.add('hidden');
+    document.getElementById('govFooter').classList.add('hidden');
+    document.getElementById('saludo').textContent = getSaludo() + ' ELISUA AYELEN MARTÍNEZ HERNÁNDEZ';
+    setTopTab('alumnos');
+    navigate('menu');
+  }
+
+  function doLogout() {
+    loggedIn = false;
+    document.getElementById('view-login').classList.remove('hidden');
+    document.getElementById('view-portal').classList.add('hidden');
+    document.getElementById('govHeader').classList.remove('hidden');
+    document.getElementById('govFooter').classList.remove('hidden');
+    setTopTab('inicio');
+    document.getElementById('usuario').value = '';
+    document.getElementById('password').value = '';
+    document.getElementById('captcha').value = '';
+    refreshCaptcha();
+  }
+
+  function setTopTab(tab) {
+    document.querySelectorAll('.top-nav a').forEach(a => {
+      a.classList.toggle('active', a.dataset.tab === tab);
+    });
+    if (loggedIn && tab === 'alumnos') navigate('menu');
+  }
+
+  function navigate(view) {
+    const panels = document.querySelectorAll('.panel-view');
+    panels.forEach(p => p.classList.add('hidden'));
+
+    const map = {
+      'menu': 'panel-menu',
+      'datos-personales': 'panel-datos-personales',
+      'datos-medicos': 'panel-datos-medicos',
+      'datos-extracurriculares': 'panel-datos-extracurriculares',
+      'kardex': 'panel-kardex'
+    };
+    const panel = document.getElementById(map[view]);
+    if (panel) panel.classList.remove('hidden');
+
+    document.querySelectorAll('.sidebar .menu-item').forEach(item => {
+      item.classList.toggle('active', item.dataset.view === view);
+    });
+
+    if (window.innerWidth <= 768) {
+      document.getElementById('sidebar').classList.remove('open');
+    }
+
+    window.scrollTo(0, 0);
+  }
+
+  function switchTab(tabId) {
+    document.querySelectorAll('.tabs-row button').forEach((btn, i) => {
+      const tabs = ['generales','nacimiento','direccion','escolaridad','padre'];
+      btn.classList.toggle('active', tabs[i] === tabId);
+    });
+    document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+    document.getElementById('tab-' + tabId).classList.add('active');
+  }
+
+  function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+  }
+
+  function buildKardex() {
+    const container = document.getElementById('kardexTables');
+    container.innerHTML = KARDEX_DATA.map(sem => `
+      <div class="semestre-title">${sem.semestre}</div>
+      <div class="kardex-table-wrap">
+        <table class="kardex-table">
+          <thead>
+            <tr>
+              <th>Clave</th><th>Materia</th><th>Fecha</th><th>Periodo</th><th>Forma Eval.</th><th>Calificacion</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${sem.materias.map(m => `<tr><td>${m[0]}</td><td>${m[1]}</td><td>${m[2]}</td><td>${m[3]}</td><td>${m[4]}</td><td>${m[5]}</td></tr>`).join('')}
+          </tbody>
+        </table>
+      </div>
+    `).join('');
+  }
+
+  buildKardex();
+</script>
+</body>
+</html>
