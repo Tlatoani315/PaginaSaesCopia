@@ -3138,6 +3138,282 @@
         font-size: 5px;
       }
     }
+
+    /* ===== FINAL PASS: DATOS PERSONALES ===== */
+    #panel-datos-personales {
+      background: #fff;
+      padding-bottom: 0;
+    }
+
+    #panel-datos-personales .breadcrumb {
+      padding: 5px 0 7px 10px;
+      color: #8b0000;
+      font: normal 9px Verdana, Arial, Helvetica, sans-serif;
+    }
+
+    #panel-datos-personales .doc-header {
+      margin: 16px 34px 20px;
+      padding: 0;
+      align-items: flex-start;
+    }
+
+    #panel-datos-personales .doc-header .mini-logo {
+      width: 62px;
+      height: 66px;
+      flex: 0 0 62px;
+    }
+
+    #panel-datos-personales .doc-logo-img,
+    #panel-datos-personales .doc-logo-img.ipn-doc {
+      width: 56px;
+      height: 62px;
+    }
+
+    #panel-datos-personales .doc-title {
+      padding-top: 6px;
+      font: bold 11px Verdana, Arial, Helvetica, sans-serif;
+      line-height: 1.55;
+      color: #000;
+    }
+
+    #panel-datos-personales .datos-layout {
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: flex-start;
+      margin: 0 34px;
+      gap: 18px;
+    }
+
+    #panel-datos-personales .foto-col {
+      width: 118px;
+      flex: 0 0 118px;
+      padding-top: 3px;
+      text-align: center;
+    }
+
+    #panel-datos-personales .foto-col img {
+      width: 112px;
+      height: 137px;
+      object-fit: cover;
+      border: 2px solid #333;
+    }
+
+    #panel-datos-personales .foto-col .btn-orange {
+      width: auto;
+      margin-top: 22px;
+      padding: 4px 7px;
+      font: normal 9px Verdana, Arial, Helvetica, sans-serif;
+    }
+
+    #panel-datos-personales .datos-layout > div:last-child {
+      flex: 1 1 auto;
+      min-width: 0;
+      max-width: 430px;
+    }
+
+    #panel-datos-personales .tabs-row {
+      display: flex;
+      align-items: flex-end;
+      height: 21px;
+      margin: 0;
+      border: 0;
+      overflow: visible;
+    }
+
+    #panel-datos-personales .tabs-row button {
+      min-height: 18px;
+      padding: 2px 7px;
+      border: 1px solid #9fb4c8;
+      border-bottom: 0;
+      background: linear-gradient(#fff, #dce8f4);
+      color: #000;
+      font: normal 9px Verdana, Arial, Helvetica, sans-serif;
+      line-height: 12px;
+    }
+
+    #panel-datos-personales .tabs-row button.active {
+      background: #fff7d7;
+      border-color: #d6b15e;
+      color: #000;
+      font-weight: normal;
+    }
+
+    #panel-datos-personales .tab-content {
+      min-height: 151px;
+      padding: 24px 45px 18px;
+      border: 1px solid #b9b9b9;
+      background: #fff;
+    }
+
+    #panel-datos-personales #tab-direccion.tab-content,
+    #panel-datos-personales #tab-escolaridad.tab-content,
+    #panel-datos-personales #tab-padre.tab-content {
+      padding-top: 17px;
+    }
+
+    #panel-datos-personales .tab-warning {
+      margin: 0 0 12px;
+      color: #b00000;
+      font: bold 9px Verdana, Arial, Helvetica, sans-serif;
+      line-height: 1.15;
+    }
+
+    #panel-datos-personales .datos-table {
+      width: 100%;
+      border-collapse: collapse;
+      font: normal 9px Verdana, Arial, Helvetica, sans-serif;
+      color: #000;
+    }
+
+    #panel-datos-personales .datos-table tbody {
+      display: table-row-group;
+    }
+
+    #panel-datos-personales .datos-table tr {
+      display: table-row;
+    }
+
+    #panel-datos-personales .datos-table td {
+      display: table-cell;
+      padding: 4px 6px;
+      line-height: 1.2;
+      vertical-align: top;
+    }
+
+    #panel-datos-personales .datos-table td:first-child {
+      width: 122px;
+      color: #000;
+      font-weight: normal;
+      text-align: left;
+    }
+
+    #panel-datos-personales .datos-table a {
+      color: #8b0000;
+      text-decoration: underline;
+    }
+
+    #panel-datos-personales .datos-actions {
+      width: 100%;
+      margin-top: -30px;
+      text-align: center;
+    }
+
+    #panel-datos-personales .datos-actions .btn-orange {
+      padding: 3px 10px;
+      font: normal 9px Verdana, Arial, Helvetica, sans-serif;
+      line-height: 11px;
+    }
+
+    #panel-datos-personales .legal-text {
+      margin: 76px 0 0;
+      padding: 0;
+      color: #b00000;
+      font: bold 7px Verdana, Arial, Helvetica, sans-serif;
+      line-height: 1.05;
+      text-align: justify;
+    }
+
+    @media (max-width: 620px) {
+      #panel-datos-personales .doc-header {
+        margin: 12px 18px 14px;
+      }
+
+      #panel-datos-personales .doc-header .mini-logo {
+        width: 42px;
+        height: 48px;
+        flex-basis: 42px;
+      }
+
+      #panel-datos-personales .doc-logo-img,
+      #panel-datos-personales .doc-logo-img.ipn-doc {
+        width: 40px;
+        height: 46px;
+      }
+
+      #panel-datos-personales .doc-title {
+        padding-top: 4px;
+        font-size: 7px;
+        line-height: 1.45;
+      }
+
+      #panel-datos-personales .datos-layout {
+        margin: 0 18px;
+        gap: 10px;
+      }
+
+      #panel-datos-personales .foto-col {
+        width: 72px;
+        flex-basis: 72px;
+      }
+
+      #panel-datos-personales .foto-col img {
+        width: 66px;
+        height: 82px;
+      }
+
+      #panel-datos-personales .foto-col .btn-orange {
+        margin-top: 16px;
+        padding: 2px 4px;
+        font-size: 6px;
+      }
+
+      #panel-datos-personales .datos-layout > div:last-child {
+        max-width: none;
+      }
+
+      #panel-datos-personales .tabs-row {
+        height: 16px;
+      }
+
+      #panel-datos-personales .tabs-row button {
+        min-height: 14px;
+        padding: 1px 3px;
+        font-size: 6px;
+        line-height: 9px;
+      }
+
+      #panel-datos-personales .tab-content {
+        min-height: 118px;
+        padding: 14px 18px 13px;
+      }
+
+      #panel-datos-personales #tab-direccion.tab-content,
+      #panel-datos-personales #tab-escolaridad.tab-content,
+      #panel-datos-personales #tab-padre.tab-content {
+        padding-top: 10px;
+      }
+
+      #panel-datos-personales .tab-warning {
+        margin-bottom: 8px;
+        font-size: 6px;
+      }
+
+      #panel-datos-personales .datos-table {
+        font-size: 6px;
+      }
+
+      #panel-datos-personales .datos-table td {
+        padding: 2px 4px;
+      }
+
+      #panel-datos-personales .datos-table td:first-child {
+        width: 75px;
+      }
+
+      #panel-datos-personales .datos-actions {
+        margin-top: -20px;
+      }
+
+      #panel-datos-personales .datos-actions .btn-orange {
+        padding: 2px 6px;
+        font-size: 6px;
+      }
+
+      #panel-datos-personales .legal-text {
+        margin-top: 66px;
+        font-size: 5px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -3365,39 +3641,49 @@
                   </table>
                 </div>
                 <div id="tab-nacimiento" class="tab-content">
+                  <p class="tab-warning">Si va a modificar tu fecha de nacimiento por favor que sea de la siguiente manera: 01/15 Mar 1992 ya que si no es así la fecha no se guardara correctamente.</p>
                   <table class="datos-table">
-                    <tr><td>Fecha de nacimiento:</td><td>04/02/2008</td></tr>
-                    <tr><td>País:</td><td>MÉXICO</td></tr>
-                    <tr><td>Entidad:</td><td>CIUDAD DE MÉXICO</td></tr>
-                    <tr><td>Municipio:</td><td>CIUDAD DE MÉXICO</td></tr>
-                    <tr><td>Localidad:</td><td>CIUDAD DE MÉXICO</td></tr>
+                    <tr><td>Fecha de Nacimiento:</td><td>04 Feb 2008</td></tr>
+                    <tr><td>Nacionalidad:</td><td>MEXICANA</td></tr>
+                    <tr><td>Entidad de Nacimiento:</td><td>CIUDAD DE MÉXICO</td></tr>
                   </table>
                 </div>
                 <div id="tab-direccion" class="tab-content">
                   <table class="datos-table">
-                    <tr><td>País:</td><td>MÉXICO</td></tr>
-                    <tr><td>Entidad:</td><td>CIUDAD DE MÉXICO</td></tr>
-                    <tr><td>Municipio:</td><td>CIUDAD DE MÉXICO</td></tr>
-                    <tr><td>Localidad:</td><td>CIUDAD DE MÉXICO</td></tr>
-                    <tr><td>Colonia:</td><td>No especificado</td></tr>
-                    <tr><td>Calle:</td><td>No especificado</td></tr>
-                    <tr><td>C.P.:</td><td>No especificado</td></tr>
+                    <tr><td>Calle:</td><td>PRIVADA / CALLE DE LA LAGUNA 123</td></tr>
+                    <tr><td>Número Ext:</td><td>0</td></tr>
+                    <tr><td>Número Int:</td><td>0</td></tr>
+                    <tr><td>Colonia:</td><td>CIUDAD DE MÉXICO</td></tr>
+                    <tr><td>C.P.:</td><td>00000</td></tr>
+                    <tr><td>Estado:</td><td>CIUDAD DE MÉXICO</td></tr>
+                    <tr><td>Del/Mpo:</td><td>CIUDAD DE MÉXICO</td></tr>
+                    <tr><td>Teléfono:</td><td>555 000 0000</td></tr>
+                    <tr><td>Móvil:</td><td></td></tr>
+                    <tr><td>e-mail:</td><td></td></tr>
+                    <tr><td>e-mail personal:</td><td><a href="mailto:elisua.martinez@example.com">elisua.martinez@example.com</a></td></tr>
+                    <tr><td>Laboral:</td><td>NO</td></tr>
+                    <tr><td>Tel. Oficina:</td><td>SIN ESPECIFICAR</td></tr>
                   </table>
                 </div>
                 <div id="tab-escolaridad" class="tab-content">
                   <table class="datos-table">
-                    <tr><td>Secundaria:</td><td>No especificado</td></tr>
-                    <tr><td>Promedio:</td><td>No especificado</td></tr>
-                    <tr><td>Año de egreso:</td><td>No especificado</td></tr>
+                    <tr><td>Escuela de Procedencia:</td><td></td></tr>
+                    <tr><td>Entidad Federativa de la Escuela de Procedencia:</td><td>CIUDAD DE MÉXICO</td></tr>
+                    <tr><td>Año de Ingreso a la Escuela de Procedencia:</td><td></td></tr>
+                    <tr><td>Año de Egreso de la Escuela de Procedencia:</td><td></td></tr>
+                    <tr><td>Promedio Secundaria:</td><td>9.80</td></tr>
+                    <tr><td>Promedio Nivel Medio Superior:</td><td>0.00</td></tr>
                   </table>
                 </div>
                 <div id="tab-padre" class="tab-content">
                   <table class="datos-table">
-                    <tr><td>Nombre del padre/tutor:</td><td>No especificado</td></tr>
-                    <tr><td>Teléfono:</td><td>No especificado</td></tr>
+                    <tr><td>Nombre del Tutor:</td><td></td></tr>
+                    <tr><td>RFC del Tutor:</td><td>XXXXXXXXXXX</td></tr>
+                    <tr><td>Nombre del Padre:</td><td>Sin Especificar</td></tr>
+                    <tr><td>Nombre de la Madre:</td><td>Sin Especificar</td></tr>
                   </table>
                 </div>
-                <div style="text-align:right;margin-top:12px">
+                <div class="datos-actions">
                   <button class="btn-orange" style="width:auto">Modificar</button>
                 </div>
               </div>
