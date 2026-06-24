@@ -3640,6 +3640,79 @@
         line-height: 11px;
       }
     }
+
+    /* ===== KARDEX FINAL SCROLL FIX ===== */
+    html,
+    body {
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+      height: auto !important;
+    }
+
+    .page-wrapper,
+    .content-area,
+    #view-portal,
+    .portal-layout,
+    .main-panel,
+    #panel-kardex,
+    #panel-kardex .kardex-doc,
+    #panel-kardex .kardex-table-wrap,
+    #panel-kardex .kardex-table {
+      max-width: 100% !important;
+      overflow-x: hidden !important;
+    }
+
+    .page-wrapper,
+    .content-area,
+    #view-portal,
+    .portal-layout,
+    .main-panel,
+    #panel-kardex {
+      overflow-y: visible !important;
+      height: auto !important;
+    }
+
+    #panel-kardex .kardex-table-wrap {
+      display: block;
+      overflow-y: visible !important;
+    }
+
+    #panel-kardex .kardex-table {
+      width: 100% !important;
+      min-width: 0 !important;
+      max-width: 100% !important;
+      table-layout: fixed !important;
+    }
+
+    #panel-kardex .kardex-table th,
+    #panel-kardex .kardex-table td {
+      box-sizing: border-box;
+      white-space: normal !important;
+      word-break: break-word !important;
+      overflow-wrap: break-word !important;
+    }
+
+    @media (max-width: 620px) {
+      #panel-kardex .kardex-doc {
+        padding: 6px 1px !important;
+      }
+
+      #panel-kardex .kardex-info,
+      #panel-kardex .kardex-summary,
+      #panel-kardex .kardex-disclaimer {
+        padding-left: 1px !important;
+        padding-right: 1px !important;
+      }
+
+      #panel-kardex .kardex-table {
+        font-size: 4.8px !important;
+      }
+
+      #panel-kardex .kardex-table th,
+      #panel-kardex .kardex-table td {
+        padding: 2px 0 !important;
+      }
+    }
   </style>
 </head>
 <body>
