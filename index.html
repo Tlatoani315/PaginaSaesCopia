@@ -2945,6 +2945,199 @@
         width: 100%;
       }
     }
+
+    /* ===== FINAL PASS: DATOS MEDICOS ===== */
+    #panel-datos-medicos {
+      background: #fff;
+      padding-bottom: 0;
+    }
+
+    #panel-datos-medicos .doc-header {
+      margin: 17px 38px 8px;
+      padding-bottom: 0;
+      align-items: flex-start;
+    }
+
+    #panel-datos-medicos .doc-header .mini-logo {
+      width: 64px;
+      height: 64px;
+      flex: 0 0 64px;
+    }
+
+    #panel-datos-medicos .doc-logo-img,
+    #panel-datos-medicos .doc-logo-img.ipn-doc {
+      width: 58px;
+      height: 60px;
+    }
+
+    #panel-datos-medicos .doc-title {
+      padding-top: 8px;
+      font: bold 11px Verdana, Arial, Helvetica, sans-serif;
+      line-height: 1.55;
+    }
+
+    #panel-datos-medicos .student-info-row {
+      display: block;
+      width: 78%;
+      margin: 0 auto 12px;
+      color: #000;
+      font: bold 10px Verdana, Arial, Helvetica, sans-serif;
+      line-height: 1.8;
+    }
+
+    #panel-datos-medicos .student-info-row div {
+      display: block;
+    }
+
+    #panel-datos-medicos h3 {
+      margin: 16px 0 23px !important;
+      color: #9b0000 !important;
+      text-align: center;
+      font: bold 11px Verdana, Arial, Helvetica, sans-serif !important;
+      letter-spacing: .2px;
+    }
+
+    #panel-datos-medicos .medico-block {
+      width: 82%;
+      margin: 0 auto 0;
+      background: #fff;
+    }
+
+    #panel-datos-medicos .medico-block h4 {
+      height: 18px;
+      padding: 3px 6px 2px;
+      background: #980000;
+      color: #fff;
+      text-align: center;
+      font: bold 10px Verdana, Arial, Helvetica, sans-serif;
+      line-height: 12px;
+    }
+
+    #panel-datos-medicos .medico-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0 0 8px;
+      font: normal 9px Verdana, Arial, Helvetica, sans-serif;
+    }
+
+    #panel-datos-medicos .medico-table th,
+    #panel-datos-medicos .medico-table td {
+      border: 0;
+      padding: 5px 7px;
+      background: #fff;
+      line-height: 1.25;
+      vertical-align: top;
+    }
+
+    #panel-datos-medicos .medico-table th {
+      width: 42%;
+      color: #9b0000;
+      font-weight: bold;
+      text-align: left;
+    }
+
+    #panel-datos-medicos .medico-table td {
+      color: #000;
+      text-align: left;
+    }
+
+    #panel-datos-medicos .medico-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border: 1px solid #f3f3f3;
+      border-top: 0;
+      padding-bottom: 6px;
+    }
+
+    #panel-datos-medicos .medico-grid .medico-table {
+      margin-bottom: 0;
+    }
+
+    #panel-datos-medicos .btn-orange {
+      padding: 3px 9px;
+      font-size: 9px;
+      line-height: 11px;
+    }
+
+    #panel-datos-medicos .legal-text {
+      margin: 18px 0 0;
+      color: #b00000;
+      font: bold 7px Verdana, Arial, Helvetica, sans-serif;
+      line-height: 1.05;
+      text-align: justify;
+    }
+
+    @media (max-width: 620px) {
+      #panel-datos-medicos .doc-header {
+        margin: 12px 14px 8px;
+      }
+
+      #panel-datos-medicos .doc-header .mini-logo {
+        width: 42px;
+        height: 46px;
+        flex-basis: 42px;
+      }
+
+      #panel-datos-medicos .doc-logo-img,
+      #panel-datos-medicos .doc-logo-img.ipn-doc {
+        width: 40px;
+        height: 46px;
+      }
+
+      #panel-datos-medicos .doc-title {
+        padding-top: 4px;
+        font-size: 7px;
+        line-height: 1.45;
+      }
+
+      #panel-datos-medicos .student-info-row {
+        width: 82%;
+        margin-bottom: 10px;
+        font-size: 7px;
+        line-height: 1.75;
+      }
+
+      #panel-datos-medicos h3 {
+        margin: 10px 0 14px !important;
+        font-size: 8px !important;
+      }
+
+      #panel-datos-medicos .medico-block {
+        width: 86%;
+      }
+
+      #panel-datos-medicos .medico-block h4 {
+        height: 14px;
+        padding: 2px 4px;
+        font-size: 7px;
+        line-height: 9px;
+      }
+
+      #panel-datos-medicos .medico-table {
+        font-size: 6px;
+        margin-bottom: 5px;
+      }
+
+      #panel-datos-medicos .medico-table th,
+      #panel-datos-medicos .medico-table td {
+        padding: 4px 5px;
+      }
+
+      #panel-datos-medicos .medico-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      #panel-datos-medicos .btn-orange {
+        padding: 2px 6px;
+        font-size: 7px;
+      }
+
+      #panel-datos-medicos .legal-text {
+        margin-top: 14px;
+        font-size: 5px;
+      }
+    }
   </style>
 </head>
 <body>
