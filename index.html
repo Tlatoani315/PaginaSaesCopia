@@ -3432,131 +3432,6 @@
       }
     }
 
-    /* ===== OFFLINE ERROR SCREEN ===== */
-    .offline-screen {
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-      display: none;
-      background: #202124;
-      color: #bdc1c6;
-      font-family: Arial, Helvetica, sans-serif;
-    }
-
-    .offline-screen.active {
-      display: block;
-    }
-
-    .fake-browser-top {
-      height: 140px;
-      background: #111214;
-      border-bottom: 1px solid #3c4043;
-      color: #e8eaed;
-    }
-
-    .fake-status {
-      height: 32px;
-      padding: 9px 18px 0;
-      font: bold 16px Arial, Helvetica, sans-serif;
-    }
-
-    .fake-no-internet {
-      height: 36px;
-      text-align: center;
-      color: #e8eaed;
-      font-size: 16px;
-      line-height: 34px;
-    }
-
-    .fake-address-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      height: 72px;
-      padding: 0 18px;
-      border-top: 1px solid #25272a;
-    }
-
-    .fake-home,
-    .fake-plus,
-    .fake-menu {
-      color: #e8eaed;
-      font-size: 30px;
-      line-height: 1;
-    }
-
-    .fake-url {
-      flex: 1;
-      max-width: 220px;
-      height: 48px;
-      padding: 8px 18px;
-      border-radius: 24px;
-      background: #3c4043;
-      color: #e8eaed;
-      overflow: hidden;
-      white-space: nowrap;
-      font-size: 20px;
-      line-height: 32px;
-    }
-
-    .fake-tab-count {
-      width: 28px;
-      height: 28px;
-      border: 2px solid #e8eaed;
-      border-radius: 6px;
-      text-align: center;
-      font-size: 13px;
-      line-height: 24px;
-    }
-
-    .offline-content {
-      padding: 122px 30px 0;
-    }
-
-    .file-icon {
-      width: 48px;
-      height: 56px;
-      margin-bottom: 62px;
-      position: relative;
-      border: 6px solid #b7b9bd;
-      border-top-width: 9px;
-      color: #b7b9bd;
-    }
-
-    .file-icon::after {
-      content: ":(";
-      position: absolute;
-      left: 7px;
-      top: 20px;
-      font: bold 18px monospace;
-    }
-
-    .offline-content h1 {
-      margin: 0 0 20px;
-      color: #bdc1c6;
-      font: bold 30px Arial, Helvetica, sans-serif;
-    }
-
-    .offline-content p {
-      max-width: 410px;
-      margin: 0 0 18px;
-      color: #bdc1c6;
-      font-size: 18px;
-      line-height: 1.55;
-    }
-
-    .offline-code {
-      margin-top: 28px;
-      color: #bdc1c6;
-      font-size: 14px;
-    }
-
-    @media (max-width: 620px) {
-      .offline-content {
-        padding-top: 122px;
-      }
-    }
-
     /* ===== KARDEX FIT: NO HORIZONTAL SCROLL ===== */
     #panel-kardex .kardex-doc {
       width: 100%;
@@ -3666,10 +3541,39 @@
     .content-area,
     #view-portal,
     .portal-layout,
-    .main-panel,
-    #panel-kardex {
+    .main-panel {
       overflow-y: visible !important;
       height: auto !important;
+    }
+
+    #panel-kardex {
+      height: min(642px, calc(100vh - 170px)) !important;
+      min-height: 0 !important;
+      overflow: hidden !important;
+    }
+
+    #panel-kardex .kardex-doc {
+      height: 100% !important;
+      display: flex !important;
+      flex-direction: column !important;
+      overflow-y: hidden !important;
+      overflow-x: hidden !important;
+      box-sizing: border-box;
+    }
+
+    #panel-kardex .kardex-header,
+    #panel-kardex .kardex-info,
+    #panel-kardex .kardex-divider {
+      flex: 0 0 auto;
+    }
+
+    #panel-kardex .kardex-scroll-body {
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow-y: auto !important;
+      overflow-x: hidden !important;
+      padding-right: 6px;
+      box-sizing: border-box;
     }
 
     #panel-kardex .kardex-table-wrap {
@@ -3697,11 +3601,20 @@
         padding: 6px 1px !important;
       }
 
+      #panel-kardex {
+        height: calc(100vh - 132px) !important;
+        min-height: 430px !important;
+      }
+
       #panel-kardex .kardex-info,
       #panel-kardex .kardex-summary,
       #panel-kardex .kardex-disclaimer {
         padding-left: 1px !important;
         padding-right: 1px !important;
+      }
+
+      #panel-kardex .kardex-scroll-body {
+        padding-right: 3px;
       }
 
       #panel-kardex .kardex-table {
@@ -4078,6 +3991,95 @@
 
       .calificaciones-placeholder {
         height: 32px;
+      }
+    }
+
+    /* ===== FINAL NO INTERNET SCREEN ===== */
+    .offline-screen {
+      position: fixed !important;
+      inset: 0 !important;
+      z-index: 9999 !important;
+      display: none;
+      background: #202124 !important;
+      color: #bdc1c6 !important;
+      font-family: "Segoe UI", Tahoma, sans-serif !important;
+    }
+
+    .offline-screen.active {
+      display: block !important;
+    }
+
+    .brave-error-content {
+      width: 470px;
+      max-width: calc(100vw - 48px);
+      margin: 100px auto 0;
+      color: #bdc1c6;
+    }
+
+    .brave-file-icon {
+      display: block;
+      width: 36px;
+      height: auto;
+      margin: 0 0 42px;
+      object-fit: contain;
+    }
+
+    .brave-error-content h1 {
+      margin: 0 0 16px;
+      color: #bdc1c6;
+      font: 400 24px "Segoe UI", Tahoma, sans-serif;
+      line-height: 1.25;
+    }
+
+    .brave-error-content p {
+      margin: 0 0 12px;
+      color: #bdc1c6;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .brave-error-content strong,
+    .brave-error-content abbr {
+      color: #bdc1c6;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .brave-error-code {
+      margin: 14px 0 44px;
+      color: #9aa0a6;
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .brave-reload-button {
+      min-width: 86px;
+      height: 28px;
+      padding: 0 13px;
+      border: 0;
+      border-radius: 14px;
+      background: #c8c7ff;
+      color: #202124;
+      font: 500 12px "Segoe UI", Tahoma, sans-serif;
+      cursor: pointer;
+    }
+
+    @media (max-width: 620px) {
+      .brave-error-content {
+        max-width: calc(100vw - 58px);
+        margin: 128px 0 0 29px;
+      }
+
+      .brave-file-icon {
+        margin-bottom: 58px;
+      }
+
+      .brave-error-content h1 {
+        font-size: 24px;
+      }
+
+      .brave-error-content p {
+        font-size: 14px;
       }
     }
   </style>
@@ -4494,16 +4496,18 @@
                 <div><strong>NOMBRE:</strong> ELISUA AYELEN MARTÍNEZ HERNÁNDEZ</div>
               </div>
               <hr class="kardex-divider">
-              <div class="kardex-summary">
-                <div><strong>Carrera:</strong> NIVEL MEDIO SUPERIOR</div>
-                <div><strong>Plan:</strong> 21</div>
-                <div><strong>Promedio:</strong> 8,67</div>
+              <div class="kardex-scroll-body">
+                <div class="kardex-summary">
+                  <div><strong>Carrera:</strong> NIVEL MEDIO SUPERIOR</div>
+                  <div><strong>Plan:</strong> 21</div>
+                  <div><strong>Promedio:</strong> 8,67</div>
+                </div>
+                <p class="kardex-disclaimer">Este documento es solamente informativo y carece de cualquier validez oficial.</p>
+
+                <div id="kardexTables"></div>
+
+                <p class="kardex-disclaimer">Este documento es solamente informativo y carece de cualquier validez oficial.</p>
               </div>
-              <p class="kardex-disclaimer">Este documento es solamente informativo y carece de cualquier validez oficial.</p>
-
-              <div id="kardexTables"></div>
-
-              <p class="kardex-disclaimer">Este documento es solamente informativo y carece de cualquier validez oficial.</p>
             </div>
           </div>
 
@@ -4563,23 +4567,12 @@
 </div>
 
 <div class="offline-screen" id="offlineScreen" onclick="hideOffline()">
-  <div class="fake-browser-top">
-    <div class="fake-status">12:17 &nbsp; ◕ &nbsp; ✓ &nbsp; ○ &nbsp; ✉</div>
-    <div class="fake-no-internet">⌁ No internet connection</div>
-    <div class="fake-address-row">
-      <div class="fake-home">⌂</div>
-      <div class="fake-url">serviciosocial.ipn.mx</div>
-      <div class="fake-plus">＋</div>
-      <div class="fake-tab-count">24</div>
-      <div class="fake-menu">⋮</div>
-    </div>
-  </div>
-  <div class="offline-content">
-    <div class="file-icon"></div>
-    <h1>Confirm Form Resubmission</h1>
-    <p>This webpage requires data that you entered earlier in order to be properly displayed. You can send this data again, but by doing so you will repeat any action this page previously performed.</p>
-    <p>Press the reload button to resubmit the data needed to load the page.</p>
-    <div class="offline-code">ERR_CACHE_MISS</div>
+  <div class="brave-error-content">
+    <img class="brave-file-icon" src="./no-internet.png?v=2" alt="">
+    <h1>No se puede acceder a este sitio</h1>
+    <p>No se encontró <strong>search.brave.com</strong>'s <abbr>DNS address</abbr>. Se está diagnosticando el problema.</p>
+    <div class="brave-error-code">DNS_PROBE_POSSIBLE</div>
+    <button class="brave-reload-button" type="button">Volver a cargar</button>
   </div>
 </div>
 
@@ -4759,6 +4752,12 @@
     };
     const panel = document.getElementById(map[view]);
     if (panel) panel.classList.remove('hidden');
+
+    document.body.classList.toggle('kardex-active', view === 'kardex');
+    if (view === 'kardex') {
+      const kardexScroll = document.querySelector('#panel-kardex .kardex-scroll-body');
+      if (kardexScroll) kardexScroll.scrollTop = 0;
+    }
 
     document.querySelectorAll('.sidebar .menu-item').forEach(item => {
       item.classList.toggle('active', item.dataset.view === view);
