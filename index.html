@@ -1285,6 +1285,10 @@
       font-size: 9px;
       border-collapse: collapse;
     }
+    .kardex-doc .semestre-title {
+      background: #990000;
+      color: #fff;
+    }
     .kardex-table th {
       background: #fff;
       border: 0;
@@ -1293,11 +1297,11 @@
     }
     .kardex-table td {
       border: 0;
-      border-top: 1px solid #8ed2d9;
+      border-top: 1px solid #008c95;
       padding: 3px 4px;
     }
     .kardex-table tr:nth-child(even) {
-      background: #e7f4f6;
+      background: transparent;
     }
     .gov-footer {
       min-height: 230px;
@@ -3424,6 +3428,131 @@
         font-size: 5px;
       }
     }
+
+    /* ===== OFFLINE ERROR SCREEN ===== */
+    .offline-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: none;
+      background: #202124;
+      color: #bdc1c6;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .offline-screen.active {
+      display: block;
+    }
+
+    .fake-browser-top {
+      height: 140px;
+      background: #111214;
+      border-bottom: 1px solid #3c4043;
+      color: #e8eaed;
+    }
+
+    .fake-status {
+      height: 32px;
+      padding: 9px 18px 0;
+      font: bold 16px Arial, Helvetica, sans-serif;
+    }
+
+    .fake-no-internet {
+      height: 36px;
+      text-align: center;
+      color: #e8eaed;
+      font-size: 16px;
+      line-height: 34px;
+    }
+
+    .fake-address-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      height: 72px;
+      padding: 0 18px;
+      border-top: 1px solid #25272a;
+    }
+
+    .fake-home,
+    .fake-plus,
+    .fake-menu {
+      color: #e8eaed;
+      font-size: 30px;
+      line-height: 1;
+    }
+
+    .fake-url {
+      flex: 1;
+      max-width: 220px;
+      height: 48px;
+      padding: 8px 18px;
+      border-radius: 24px;
+      background: #3c4043;
+      color: #e8eaed;
+      overflow: hidden;
+      white-space: nowrap;
+      font-size: 20px;
+      line-height: 32px;
+    }
+
+    .fake-tab-count {
+      width: 28px;
+      height: 28px;
+      border: 2px solid #e8eaed;
+      border-radius: 6px;
+      text-align: center;
+      font-size: 13px;
+      line-height: 24px;
+    }
+
+    .offline-content {
+      padding: 122px 30px 0;
+    }
+
+    .file-icon {
+      width: 48px;
+      height: 56px;
+      margin-bottom: 62px;
+      position: relative;
+      border: 6px solid #b7b9bd;
+      border-top-width: 9px;
+      color: #b7b9bd;
+    }
+
+    .file-icon::after {
+      content: ":(";
+      position: absolute;
+      left: 7px;
+      top: 20px;
+      font: bold 18px monospace;
+    }
+
+    .offline-content h1 {
+      margin: 0 0 20px;
+      color: #bdc1c6;
+      font: bold 30px Arial, Helvetica, sans-serif;
+    }
+
+    .offline-content p {
+      max-width: 410px;
+      margin: 0 0 18px;
+      color: #bdc1c6;
+      font-size: 18px;
+      line-height: 1.55;
+    }
+
+    .offline-code {
+      margin-top: 28px;
+      color: #bdc1c6;
+      font-size: 14px;
+    }
+
+    @media (max-width: 620px) {
+      .offline-content {
+        padding-top: 122px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -3531,61 +3660,61 @@
             <a class="menu-item" data-view="datos-medicos" onclick="navigate('datos-medicos')">Datos Médicos</a>
             <a class="menu-item" data-view="datos-extracurriculares" onclick="navigate('datos-extracurriculares')">Datos Extracurriculares</a>
           </div>
-          <a class="menu-single">Expediente Digital</a>
-          <a class="menu-single">Pase Digital</a>
-          <a class="menu-single">Cambios de Carrera</a>
-          <a class="menu-single">Red Académica ISISA</a>
+          <a class="menu-single" onclick="showOffline()">Expediente Digital</a>
+          <a class="menu-single" onclick="showOffline()">Pase Digital</a>
+          <a class="menu-single" onclick="showOffline()">Cambios de Carrera</a>
+          <a class="menu-single" onclick="showOffline()">Red Académica ISISA</a>
           <div class="menu-section">
             <div class="menu-title">Tramites</div>
-            <a class="menu-item">Solicitud</a>
-            <a class="menu-item">Seguimiento</a>
-            <a class="menu-item">Citas</a>
+            <a class="menu-item" onclick="showOffline()">Solicitud</a>
+            <a class="menu-item" onclick="showOffline()">Seguimiento</a>
+            <a class="menu-item" onclick="showOffline()">Citas</a>
           </div>
           <div class="menu-section">
             <div class="menu-title">Datos académicos</div>
             <a class="menu-item" data-view="kardex" onclick="navigate('kardex')">Kárdex</a>
-            <a class="menu-item">Estado General</a>
-            <a class="menu-item">Solicitud Dictamen</a>
-            <a class="menu-item">Dictamen</a>
+            <a class="menu-item" onclick="showOffline()">Estado General</a>
+            <a class="menu-item" onclick="showOffline()">Solicitud Dictamen</a>
+            <a class="menu-item" onclick="showOffline()">Dictamen</a>
           </div>
           <div class="menu-section">
             <div class="menu-title">Inscripción Actual</div>
-            <a class="menu-item">Horario</a>
-            <a class="menu-item">Calificaciones</a>
+            <a class="menu-item" onclick="showOffline()">Horario</a>
+            <a class="menu-item" onclick="showOffline()">Calificaciones</a>
           </div>
           <div class="menu-section">
             <div class="menu-title">Reinscripciones</div>
-            <a class="menu-item">Cita de Reinscripcion</a>
-            <a class="menu-item">Reinscripcion</a>
-            <a class="menu-item">Comprobante</a>
+            <a class="menu-item" onclick="showOffline()">Cita de Reinscripcion</a>
+            <a class="menu-item" onclick="showOffline()">Reinscripcion</a>
+            <a class="menu-item" onclick="showOffline()">Comprobante</a>
           </div>
           <div class="menu-section">
             <div class="menu-title">ETS</div>
-            <a class="menu-item">Inscribir ETS</a>
-            <a class="menu-item">Calificaciones</a>
+            <a class="menu-item" onclick="showOffline()">Inscribir ETS</a>
+            <a class="menu-item" onclick="showOffline()">Calificaciones</a>
           </div>
           <div class="menu-section">
             <div class="menu-title">Saberes Previamente Ad</div>
-            <a class="menu-item">Inscribir Saberes Pre</a>
-            <a class="menu-item">Calificaciones</a>
+            <a class="menu-item" onclick="showOffline()">Inscribir Saberes Pre</a>
+            <a class="menu-item" onclick="showOffline()">Calificaciones</a>
           </div>
           <div class="menu-section">
             <div class="menu-title">Cursos de Recuperacion</div>
-            <a class="menu-item">Inscribir Cursos de R</a>
-            <a class="menu-item">Calificaciones</a>
+            <a class="menu-item" onclick="showOffline()">Inscribir Cursos de R</a>
+            <a class="menu-item" onclick="showOffline()">Calificaciones</a>
           </div>
           <div class="menu-section">
             <div class="menu-title">Tutores</div>
-            <a class="menu-item">Tutor Actual</a>
-            <a class="menu-item">Comentarios</a>
-            <a class="menu-item">Evaluación</a>
+            <a class="menu-item" onclick="showOffline()">Tutor Actual</a>
+            <a class="menu-item" onclick="showOffline()">Comentarios</a>
+            <a class="menu-item" onclick="showOffline()">Evaluación</a>
           </div>
           <div class="menu-section">
             <div class="menu-title">Evaluacion Profesor</div>
-            <a class="menu-item">Evaluación</a>
+            <a class="menu-item" onclick="showOffline()">Evaluación</a>
           </div>
-          <a class="menu-single">Correo personal</a>
-          <a class="menu-single">Clave de acceso</a>
+          <a class="menu-single" onclick="showOffline()">Correo personal</a>
+          <a class="menu-single" onclick="showOffline()">Clave de acceso</a>
           <div class="logout-box">
             <a href="#" onclick="doLogout(); return false;">Cerrar sesión</a>
             <div class="boleta-num">2024031123</div>
@@ -3806,9 +3935,9 @@
         <!-- QUICK ACCESS -->
         <aside class="quick-access">
           <h4>Accesos rápidos</h4>
-          <a href="#">» Agenda escolar</a>
-          <a href="#">» Horarios de clase</a>
-          <a href="#">» Horarios de ETS</a>
+          <a href="#" onclick="showOffline(); return false;">» Agenda escolar</a>
+          <a href="#" onclick="showOffline(); return false;">» Horarios de clase</a>
+          <a href="#" onclick="showOffline(); return false;">» Horarios de ETS</a>
         </aside>
       </div>
 
@@ -3856,46 +3985,68 @@
 
 </div>
 
+<div class="offline-screen" id="offlineScreen" onclick="hideOffline()">
+  <div class="fake-browser-top">
+    <div class="fake-status">12:17 &nbsp; ◕ &nbsp; ✓ &nbsp; ○ &nbsp; ✉</div>
+    <div class="fake-no-internet">⌁ No internet connection</div>
+    <div class="fake-address-row">
+      <div class="fake-home">⌂</div>
+      <div class="fake-url">serviciosocial.ipn.mx</div>
+      <div class="fake-plus">＋</div>
+      <div class="fake-tab-count">24</div>
+      <div class="fake-menu">⋮</div>
+    </div>
+  </div>
+  <div class="offline-content">
+    <div class="file-icon"></div>
+    <h1>Confirm Form Resubmission</h1>
+    <p>This webpage requires data that you entered earlier in order to be properly displayed. You can send this data again, but by doing so you will repeat any action this page previously performed.</p>
+    <p>Press the reload button to resubmit the data needed to load the page.</p>
+    <div class="offline-code">ERR_CACHE_MISS</div>
+  </div>
+</div>
+
 <script>
   const KARDEX_DATA = [
     {
       semestre: 'PRIMER SEMESTRE',
       materias: [
         ['0101','ÁLGEBRA','Ene 22 2024','24/1','ORD','9'],
-        ['0102','QUÍMICA','Ene 22 2024','24/1','ORD','8'],
-        ['0103','INTRODUCCIÓN A LA COMPUTACIÓN','Ene 22 2024','24/1','ORD','10'],
-        ['0104','LECTURA, REFLEXIÓN Y ESCRITURA','Ene 22 2024','24/1','ORD','9'],
-        ['0105','INGLÉS I','Ene 22 2024','24/1','ORD','8'],
-        ['0106','FILOSOFÍA','Ene 22 2024','24/1','ORD','9'],
-        ['0107','ORIENTACIÓN JUVENIL Y PROFESIONAL I','Ene 22 2024','24/1','ORD','10'],
-        ['0108','MECÁNICA','Ene 22 2024','24/1','ORD','8'],
-        ['0109','COMPUTACIÓN BÁSICA PARA EL AUTODIDACTA','Ene 22 2024','24/1','ORD','10']
+        ['0102','FILOSOFÍA I','Ene 22 2024','24/1','ORD','10'],
+        ['0103','COMPUTACIÓN BÁSICA I','Ene 22 2024','24/1','ORD','9'],
+        ['0104','INGLÉS I','Ene 22 2024','24/1','ORD','8'],
+        ['0105','EXPRESIÓN ORAL Y ESCRITA I','Ene 22 2024','24/1','ORD','9'],
+        ['0106','DESARROLLO DE HABILIDADES DEL PENSAMIENTO','Ene 22 2024','24/1','ORD','8'],
+        ['0107','HISTORIA DE MÉXICO CONTEMPORÁNEO I','Ene 22 2024','24/1','ORD','8'],
+        ['0108','DESARROLLO PERSONAL','Ene 22 2024','24/1','ORD','9'],
+        ['0109','ORIENTACIÓN JUVENIL Y PROFESIONAL I','Ene 22 2024','24/1','ORD','10']
       ]
     },
     {
       semestre: 'SEGUNDO SEMESTRE',
       materias: [
         ['0201','GEOMETRÍA Y TRIGONOMETRÍA','Jul 8 2024','24/2','ORD','8'],
-        ['0202','QUÍMICA APLICADA A LA INDUSTRIA','Jul 8 2024','24/2','ORD','9'],
-        ['0203','INTRODUCCIÓN A LA PROGRAMACIÓN','Jul 8 2024','24/2','ORD','10'],
-        ['0204','COMPETENCIA COMUNICATIVA','Jul 8 2024','24/2','ORD','9'],
-        ['0205','INGLÉS II','Jul 8 2024','24/2','ORD','8'],
-        ['0206','HISTORIA','Jul 8 2024','24/2','ORD','9'],
-        ['0207','ORIENTACIÓN JUVENIL Y PROFESIONAL II','Jul 8 2024','24/2','ORD','10'],
-        ['0208','ELECTRICIDAD','Jul 8 2024','24/2','ORD','8']
+        ['0202','FILOSOFÍA II','Jul 8 2024','24/2','ORD','8'],
+        ['0203','COMPUTACIÓN BÁSICA II','Jul 8 2024','24/2','ORD','10'],
+        ['0204','INGLÉS II','Jul 8 2024','24/2','ORD','9'],
+        ['0205','EXPRESIÓN ORAL Y ESCRITA II','Jul 8 2024','24/2','ORD','8'],
+        ['0206','BIOLOGÍA BÁSICA','Jul 8 2024','24/2','ORD','8'],
+        ['0207','HISTORIA DE MÉXICO CONTEMPORÁNEO II','Jul 8 2024','24/2','ORD','7'],
+        ['0208','ORIENTACIÓN JUVENIL Y PROFESIONAL II','Jul 8 2024','24/2','ORD','9'],
+        ['0209','COMUNICACIÓN Y LIDERAZGO','Jul 8 2024','24/2','ORD','10']
       ]
     },
     {
       semestre: 'TERCER SEMESTRE',
       materias: [
-        ['C301','GEOMETRIA ANALITICA','Ene 20 2025','25/1','ORD','8'],
-        ['C302','FISICA I','Ene 20 2025','25/1','ORD','9'],
-        ['C303','QUIMICA I','Ene 20 2025','25/1','ORD','7'],
-        ['C304','INGLES III','Ene 20 2025','25/1','ORD','6'],
-        ['C305','COMUNICACION CIENTIFICA','Ene 20 2025','25/1','ORD','9'],
-        ['C306','DIBUJO TECNICO I','Ene 20 2025','25/1','ORD','8'],
-        ['C307','ENTORNO SOCIOECONOMICO DE MEXICO','Ene 20 2025','25/1','ORD','9'],
-        ['C308','ALGORITMIA Y PROGRAMACION','Ene 20 2025','25/1','ORD','9'],
+        ['C301','GEOMETRÍA ANALÍTICA','Ene 20 2025','25/1','ORD','8'],
+        ['C302','FÍSICA I','Ene 20 2025','25/1','ORD','9'],
+        ['C303','QUÍMICA I','Ene 20 2025','25/1','ORD','7'],
+        ['C304','INGLÉS III','Ene 20 2025','25/1','ORD','6'],
+        ['C305','COMUNICACIÓN CIENTÍFICA','Ene 20 2025','25/1','ORD','9'],
+        ['C306','DIBUJO TÉCNICO I','Ene 20 2025','25/1','ORD','8'],
+        ['C307','ENTORNO SOCIOECONÓMICO DE MÉXICO','Ene 20 2025','25/1','ORD','9'],
+        ['C308','ALGORITMIA Y PROGRAMACIÓN','Ene 20 2025','25/1','ORD','9'],
         ['C309','ENSAMBLADO Y SOPORTE DE COMPONENTES ELECTRÓNICOS','Ene 20 2025','25/1','ORD','10'],
         ['C311','INTEGRACIÓN DE RECURSOS MULTIMEDIA','Ene 20 2025','25/1','ORD','10']
       ]
@@ -3903,13 +4054,13 @@
     {
       semestre: 'CUARTO SEMESTRE',
       materias: [
-        ['C401','CALCULO DIFERENCIAL','Jul 7 2025','25/2','ORD','10'],
-        ['C402','FISICA II','Jul 7 2025','25/2','ORD','9'],
-        ['C403','QUIMICA II','Jul 7 2025','25/2','ORD','8'],
-        ['C404','INGLES IV','Jul 7 2025','25/2','ORD','8'],
-        ['C406','DIBUJO TECNICO II','Jul 7 2025','25/2','ORD','10'],
+        ['C401','CÁLCULO DIFERENCIAL','Jul 7 2025','25/2','ORD','10'],
+        ['C402','FÍSICA II','Jul 7 2025','25/2','ORD','9'],
+        ['C403','QUÍMICA II','Jul 7 2025','25/2','ORD','8'],
+        ['C404','INGLÉS IV','Jul 7 2025','25/2','ORD','8'],
+        ['C406','DIBUJO TÉCNICO II','Jul 7 2025','25/2','ORD','10'],
         ['C407','REDES DE COMUNICACIÓN','Jul 7 2025','25/2','ORD','10'],
-        ['C408','PROGRAMACION MODULAR','Jul 7 2025','25/2','ORD','10'],
+        ['C408','PROGRAMACIÓN MODULAR','Jul 7 2025','25/2','ORD','10'],
         ['C409','SISTEMAS OPERATIVOS','Jul 7 2025','25/2','ORD','10'],
         ['C411','APLICACIONES ELECTRÓNICAS COMPUTACIONALES','Jul 7 2025','25/2','ORD','9']
       ]
@@ -3917,12 +4068,29 @@
     {
       semestre: 'QUINTO SEMESTRE',
       materias: [
-        ['C501','CALCULO INTEGRAL','Ene 23 2026','26/1','ORD','8'],
-        ['C502','FISICA III','Ene 23 2026','26/1','ORD','8'],
-        ['C503','QUIMICA III','Ene 23 2026','26/1','ORD','8'],
-        ['C504','INGLES V','Ene 23 2026','26/1','ORD','9'],
-        ['C505','ORIENTACION JUVENIL Y PROFESIONAL III','Ene 23 2026','26/1','ORD','10'],
-        ['C506','DESARROLLO DE APLICACIONES CON ENTORNOS GRÁFICOS','Ene 23 2026','26/1','ORD','7']
+        ['C501','CÁLCULO INTEGRAL','Ene 23 2026','26/1','ORD','8'],
+        ['C502','FÍSICA III','Ene 23 2026','26/1','ORD','8'],
+        ['C503','QUÍMICA III','Ene 23 2026','26/1','ORD','8'],
+        ['C504','INGLÉS V','Ene 23 2026','26/1','ORD','9'],
+        ['C505','ORIENTACIÓN JUVENIL Y PROFESIONAL III','Ene 23 2026','26/1','ORD','10'],
+        ['C506','DESARROLLO DE APLICACIONES CON ENTORNOS GRÁFICOS','Ene 23 2026','26/1','ORD','7'],
+        ['C507','BASES DE DATOS','Ene 23 2026','26/1','ORD','9'],
+        ['C508','PORTALES WEB','Ene 23 2026','26/1','ORD','7'],
+        ['C510','CONFIGURACIÓN DE REDES','Ene 23 2026','26/1','ORD','10']
+      ]
+    },
+    {
+      semestre: 'SEXTO SEMESTRE',
+      materias: [
+        ['C601','PROBABILIDAD Y ESTADÍSTICA','Jul 1 2026','26/2','ORD','9'],
+        ['C602','FÍSICA IV','Jul 1 2026','26/2','ORD','8'],
+        ['C603','QUÍMICA IV','Jul 1 2026','26/2','ORD','9'],
+        ['C604','INGLÉS VI','Jul 1 2026','26/2','ORD','7'],
+        ['C605','ORIENTACIÓN JUVENIL Y PROFESIONAL IV','Jul 1 2026','26/2','ORD','9'],
+        ['C606','PROGRAMACIÓN DE APLICACIONES PARA DISPOSITIVOS MÓVILES','Jul 1 2026','26/2','ORD','8'],
+        ['C607','INTRODUCCIÓN A LA CIENCIA DE DATOS','Jul 1 2026','26/2','ORD','7'],
+        ['C608','SEGURIDAD INFORMÁTICA','Jul 1 2026','26/2','ORD','9'],
+        ['C609','CREACIÓN DE ENTORNOS DIMENSIONALES','Jul 1 2026','26/2','ORD','9']
       ]
     }
   ];
@@ -3977,7 +4145,25 @@
     document.querySelectorAll('.top-nav a').forEach(a => {
       a.classList.toggle('active', a.dataset.tab === tab);
     });
-    if (loggedIn && tab === 'alumnos') navigate('menu');
+    if (loggedIn && tab === 'alumnos') {
+      navigate('menu');
+      return;
+    }
+    if (loggedIn) {
+      showOffline();
+      return;
+    }
+    if (!loggedIn && tab !== 'inicio') {
+      showOffline();
+    }
+  }
+
+  function showOffline() {
+    document.getElementById('offlineScreen').classList.add('active');
+  }
+
+  function hideOffline() {
+    document.getElementById('offlineScreen').classList.remove('active');
   }
 
   function navigate(view) {
