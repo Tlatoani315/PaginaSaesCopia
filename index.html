@@ -903,56 +903,60 @@
     .login-main h1 {
       font: bold 13px Arial, Helvetica, sans-serif;
       color: #26323b;
-      margin: 4px 0 14px;
+      margin: 4px 0 10px;
+      text-align: center;
     }
-    .login-main .desc {
-      width: 90%;
-      margin: 0 auto 16px;
+    .login-intro {
+      position: relative;
+      text-align: center;
+      margin-bottom: 0;
+      padding-bottom: 10px;
+      border-bottom: 3px solid #7a1645;
+    }
+    .login-intro .desc {
+      width: auto;
+      margin: 0 58px 0 0;
+      padding: 0 0 8px;
+      border-bottom: 0;
       font: normal 11px Arial, Helvetica, sans-serif;
       color: #626262;
       line-height: 1.45;
-      border-bottom: 4px solid #7a1645;
-      padding-bottom: 16px;
+      text-align: center;
     }
-    .login-main .desc::after {
-      content: "";
-      display: block;
-      position: absolute;
-    }
-    .login-main .hero-row {
-      justify-content: center;
+    .aviso-list {
       margin-top: 0;
     }
-    .login-main .hero-row > div {
-      max-width: 340px;
-    }
-    .aviso-box {
+    .aviso-block {
       width: 100%;
-      max-width: 620px;
-      margin: 0 auto 5px;
-      padding: 2px 6px;
-      background: #7a1645;
-      color: #fff;
+      max-width: 340px;
+      margin: 0 auto;
       text-align: center;
+    }
+    .aviso-head {
+      background: #601a4a;
+      color: #fff;
+      padding: 4px 8px;
       font: bold 10px Arial, Helvetica, sans-serif;
-      line-height: 1.05;
+      line-height: 1.2;
     }
-    .aviso-box .aviso-title {
-      display: none;
-    }
-    .aviso-box a {
-      color: #0000ee;
+    .aviso-body {
       background: #fff;
+      padding: 5px 6px 6px;
+      border: 1px solid #d0d0d0;
+      border-top: 0;
+      font: normal 10px Arial, Helvetica, sans-serif;
+      line-height: 1.3;
+    }
+    .aviso-body a {
       text-decoration: underline;
-      display: inline-block;
-      padding: 0 3px;
+      word-break: break-all;
     }
-    .aviso-box .url-orange {
+    .aviso-body a.link-blue {
+      color: #0000ee;
+    }
+    .aviso-body a.link-red {
       color: #d71920;
-      background: #fff;
       font-size: 8px;
-      display: inline-block;
-      max-width: 100%;
     }
     .login-footer,
     .portal-footer {
@@ -1371,8 +1375,8 @@
     }
     .login-students-img {
       position: absolute;
-      top: 27px;
-      right: 14px;
+      top: 4px;
+      right: 0;
       width: 59px;
       height: 56px;
       object-fit: cover;
@@ -2539,11 +2543,17 @@
         border-left: 1px solid #efefef;
       }
 
+      #view-login .login-intro {
+        position: relative;
+        padding-bottom: 8px;
+        margin-bottom: 0;
+        border-bottom: 3px solid #7a1645;
+      }
+
       #view-login .login-students-img {
         position: absolute;
-        float: none;
-        top: 23px;
-        right: 10px;
+        top: 2px;
+        right: 0;
         width: 44px;
         height: 44px;
         margin: 0;
@@ -2551,47 +2561,50 @@
       }
 
       #view-login .login-main h1 {
-        margin: 1px 0 12px;
+        margin: 1px 0 10px;
         font-size: 10px;
         line-height: 13px;
       }
 
-      #view-login .login-main .desc {
-        width: calc(100% - 54px);
-        margin: 0 auto 16px;
-        padding: 0 0 13px;
-        clear: none;
-        border-bottom: 3px solid #7a1645;
+      #view-login .login-intro .desc {
+        width: calc(100% - 50px);
+        margin: 0 auto 0;
+        padding: 0 0 6px;
+        border-bottom: 0;
         font-size: 9px;
         line-height: 1.35;
         text-align: center;
       }
 
-      #view-login .login-main .hero-row {
-        display: block;
-        margin: 0;
+      #view-login .aviso-list {
+        margin-top: 0;
       }
 
-      #view-login .login-main .hero-row > div {
+      #view-login .aviso-block {
         max-width: 100%;
+        margin: 0 auto;
       }
 
-      #view-login .aviso-box {
-        max-width: 260px;
-        margin: 0 auto 3px;
-        padding: 2px 5px;
+      #view-login .aviso-head {
+        padding: 3px 5px;
         font-size: 8px;
-        line-height: 1.05;
+        line-height: 1.15;
       }
 
-      #view-login .aviso-box .url-orange {
-        font-size: 5px;
+      #view-login .aviso-body {
+        padding: 4px 5px 5px;
+        font-size: 8px;
+      }
+
+      #view-login .aviso-body a.link-red {
+        font-size: 6px;
+        line-height: 1.2;
       }
 
       #view-login .login-footer {
         height: 16px;
         min-height: 16px;
-        margin-top: 93px;
+        margin-top: 8px;
         padding: 1px 3px;
         font-size: 8px;
         line-height: 12px;
@@ -2715,8 +2728,8 @@
         flex-basis: 74px;
       }
 
-      #view-login .aviso-box {
-        max-width: 250px;
+      #view-login .aviso-block {
+        max-width: 100%;
       }
 
       #govFooter {
@@ -2789,27 +2802,27 @@
           <div style="clear:both"></div>
         </div>
         <div class="login-main">
-          <img class="login-students-img" src="personas_leyendo.jpg" alt="Estudiantes leyendo">
-          <h1>Sistema de Administración Escolar</h1>
-          <p class="desc">Es la herramienta informática diseñada para apoyar en la consulta y atención de trámites escolares.</p>
-          <div class="hero-row">
-            <div style="flex:1">
-              <div class="aviso-box">
-                <div class="aviso-title">Aviso</div>
-                <p>Se informa a la comunidad politécnica que puede realizar su denuncia de forma segura en el portal <a href="#">denunciasegura.ipn.mx</a></p>
-              </div>
-              <div class="aviso-box">
-                <div class="aviso-title">Aviso</div>
-                <p>Se informa a la comunidad politécnica que puede realizar su orientación y quejas en <a href="#">defensoria.ipn.mx</a></p>
-              </div>
-              <div class="aviso-box">
-                <div class="aviso-title">Aviso</div>
-                <p>Se informa a los alumnos que deben registrar su Número de Seguridad Social (NSS) en el SAES. Consulte: <span class="url-orange">www.imss.gob.mx/patrones/semanas-cotizadas</span></p>
-              </div>
-              <div class="aviso-box">
-                <div class="aviso-title">Aviso</div>
-                <p>Registro de NSS en SAES: <span class="url-orange">saes.ipn.mx → Alumnos → Datos Personales → Datos Médicos</span></p>
-              </div>
+          <div class="login-intro">
+            <img class="login-students-img" src="personas_leyendo.jpg" alt="Estudiantes leyendo">
+            <h1>Sistema de Administración Escolar</h1>
+            <p class="desc">Es la herramienta informática diseñada para apoyar en la consulta y atención de trámites escolares.</p>
+          </div>
+          <div class="aviso-list">
+            <div class="aviso-block">
+              <div class="aviso-head">Ingresa a realizar tu denuncia segura en:</div>
+              <div class="aviso-body"><a class="link-blue" href="https://denunciasegura.ipn.mx" target="_blank" rel="noopener">denunciasegura.ipn.mx</a></div>
+            </div>
+            <div class="aviso-block">
+              <div class="aviso-head">¿Necesitas orientación o levantar una queja? Ingresa a:</div>
+              <div class="aviso-body"><a class="link-blue" href="https://www.ipn.mx/defensoria/orientacion-queja/queja.html" target="_blank" rel="noopener">www.ipn.mx/defensoria/orientacion-queja/queja.html</a></div>
+            </div>
+            <div class="aviso-block">
+              <div class="aviso-head">Ahora que has concluido con tu inscripción, es importante que obtengas tú Número de Seguridad Social (NNS). En caso de que no cuentes con uno, ingresa en:</div>
+              <div class="aviso-body"><a class="link-red" href="https://serviciosdigitales.imss.gob.mx/semanascotizadas-web/usuarios/Inicio" target="_blank" rel="noopener">https://serviciosdigitales.imss.gob.mx/semanascotizadas-web/usuarios/Inicio</a></div>
+            </div>
+            <div class="aviso-block">
+              <div class="aviso-head">Una vez que ya lo tengas favor de registrarte en:</div>
+              <div class="aviso-body"><a class="link-red" href="https://www.sismi.dse.ipn.mx/portal/f?p=1000:101:10253682110776" target="_blank" rel="noopener">https://www.sismi.dse.ipn.mx/portal/f?p=1000:101:10253682110776</a></div>
             </div>
           </div>
           <div class="login-footer">© 2024 SAES &nbsp; <a href="#">IPN</a> &nbsp; <a href="#">IPN-DAE</a></div>
