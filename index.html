@@ -3888,6 +3888,198 @@
         line-height: 12px !important;
       }
     }
+
+    /* ===== PASE DIGITAL ===== */
+    #panel-pase-digital {
+      min-height: 220px;
+      padding: 0 0 6px;
+      background: #fff;
+      border: 3px solid #111;
+      box-sizing: border-box;
+    }
+
+    #panel-pase-digital .breadcrumb {
+      height: 29px;
+      padding: 8px 0 0 26px;
+      background: #f2f2f2;
+      color: #8b0000;
+      font: normal 10px Verdana, Arial, Helvetica, sans-serif;
+      box-sizing: border-box;
+    }
+
+    .pase-content {
+      position: relative;
+      min-height: 165px;
+      padding-top: 52px;
+      background: #fff;
+      text-align: center;
+    }
+
+    .pase-message {
+      color: #333;
+      font: normal 13px Verdana, Arial, Helvetica, sans-serif;
+    }
+
+    .btn-regresar-pase {
+      position: absolute;
+      top: 16px;
+      right: 5px;
+      width: 252px;
+      height: 28px;
+      border: 0;
+      border-radius: 7px;
+      background: #7a123f;
+      color: #fff;
+      box-shadow: 0 2px 4px rgba(0,0,0,.35);
+      font: bold 19px Arial, Helvetica, sans-serif;
+      line-height: 28px;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    #panel-pase-digital .portal-footer {
+      margin: 0 8px;
+    }
+
+    @media (max-width: 620px) {
+      #panel-pase-digital {
+        min-height: 220px;
+        border-width: 2px;
+      }
+
+      #panel-pase-digital .breadcrumb {
+        height: 28px;
+        padding: 7px 0 0 26px;
+        font-size: 8px;
+      }
+
+      .pase-content {
+        min-height: 158px;
+        padding-top: 55px;
+      }
+
+      .pase-message {
+        font-size: 8px;
+      }
+
+      .btn-regresar-pase {
+        top: 15px;
+        right: 3px;
+        width: 125px;
+        height: 20px;
+        border-radius: 5px;
+        font-size: 11px;
+        line-height: 20px;
+      }
+    }
+
+    /* ===== CALIFICACIONES ===== */
+    #panel-calificaciones {
+      min-height: 510px;
+      padding: 0;
+      background: #dedede;
+    }
+
+    .calificaciones-doc {
+      width: 88%;
+      min-height: 530px;
+      margin: 0 auto;
+      background: #fff;
+      border: 1px solid #b8b8b8;
+      box-sizing: border-box;
+      padding: 24px 24px 0;
+      font-family: Verdana, Arial, Helvetica, sans-serif;
+    }
+
+    .calificaciones-doc .doc-header {
+      margin: 0 6px 52px;
+      padding: 0;
+      align-items: flex-start;
+    }
+
+    .calificaciones-doc .doc-header .mini-logo {
+      width: 70px;
+      height: 70px;
+      flex: 0 0 70px;
+    }
+
+    .calificaciones-doc .doc-logo-img,
+    .calificaciones-doc .doc-logo-img.ipn-doc {
+      width: 62px;
+      height: 66px;
+      object-fit: contain;
+    }
+
+    .calificaciones-doc .doc-title {
+      padding-top: 5px;
+      color: #000;
+      font: bold 13px Verdana, Arial, Helvetica, sans-serif;
+      line-height: 2.45;
+      text-align: center;
+    }
+
+    .calificaciones-info {
+      margin: 0 0 50px 4px;
+      color: #000;
+      font: normal 13px Verdana, Arial, Helvetica, sans-serif;
+      line-height: 1.7;
+    }
+
+    .calificaciones-info strong {
+      display: inline-block;
+      width: 80px;
+      font-weight: bold;
+    }
+
+    .calificaciones-placeholder {
+      width: 100%;
+      height: 51px;
+      background: #f3f3f3;
+    }
+
+    @media (max-width: 620px) {
+      .calificaciones-doc {
+        width: 86%;
+        min-height: 380px;
+        padding: 18px 18px 0;
+      }
+
+      .calificaciones-doc .doc-header {
+        margin: 0 2px 34px;
+      }
+
+      .calificaciones-doc .doc-header .mini-logo {
+        width: 44px;
+        height: 48px;
+        flex-basis: 44px;
+      }
+
+      .calificaciones-doc .doc-logo-img,
+      .calificaciones-doc .doc-logo-img.ipn-doc {
+        width: 40px;
+        height: 46px;
+      }
+
+      .calificaciones-doc .doc-title {
+        padding-top: 2px;
+        font-size: 7px;
+        line-height: 2.3;
+      }
+
+      .calificaciones-info {
+        margin-bottom: 38px;
+        font-size: 7px;
+        line-height: 1.8;
+      }
+
+      .calificaciones-info strong {
+        width: 48px;
+      }
+
+      .calificaciones-placeholder {
+        height: 32px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -3996,7 +4188,7 @@
             <a class="menu-item" data-view="datos-extracurriculares" onclick="navigate('datos-extracurriculares')">Datos Extracurriculares</a>
           </div>
           <a class="menu-single" data-view="expediente-digital" onclick="navigate('expediente-digital')">Expediente Digital</a>
-          <a class="menu-single" onclick="showOffline()">Pase Digital</a>
+          <a class="menu-single" data-view="pase-digital" onclick="navigate('pase-digital')">Pase Digital</a>
           <a class="menu-single" onclick="showOffline()">Cambios de Carrera</a>
           <a class="menu-single" onclick="showOffline()">Red Académica ISISA</a>
           <div class="menu-section">
@@ -4015,7 +4207,7 @@
           <div class="menu-section">
             <div class="menu-title">Inscripción Actual</div>
             <a class="menu-item" onclick="showOffline()">Horario</a>
-            <a class="menu-item" onclick="showOffline()">Calificaciones</a>
+            <a class="menu-item" data-view="calificaciones" onclick="navigate('calificaciones')">Calificaciones</a>
           </div>
           <div class="menu-section">
             <div class="menu-title">Reinscripciones</div>
@@ -4079,6 +4271,33 @@
                   </tr>
                 </tbody>
               </table>
+            </div>
+          </div>
+
+          <!-- PASE DIGITAL -->
+          <div id="panel-pase-digital" class="panel-view hidden">
+            <div class="breadcrumb">Inicio » Alumnos » Pase Digital</div>
+            <div class="pase-content">
+              <button class="btn-regresar-pase" onclick="navigate('menu')">&lt;&lt;&lt; Regresar</button>
+              <div class="pase-message">No cuentas con ningún Pase Digital Vigente</div>
+            </div>
+            <div class="portal-footer">© 2024 SAES &nbsp; <a href="#">IPN</a> &nbsp; <a href="#">IPN-DAE</a></div>
+          </div>
+
+          <!-- CALIFICACIONES -->
+          <div id="panel-calificaciones" class="panel-view hidden">
+            <div class="breadcrumb">Inicio » Alumnos » Inscripción Actual » Calificaciones</div>
+            <div class="calificaciones-doc">
+              <div class="doc-header">
+                <div class="mini-logo"><img class="doc-logo-img ipn-doc" src="logo_ipn.png" alt="IPN"></div>
+                <div class="doc-title">CENTRO DE ESTUDIOS CIENTÍFICOS Y TECNOLÓGICOS No. 3<br>ESTANISLAO RAMIREZ RUIZ</div>
+                <div class="mini-logo"><img class="doc-logo-img" src="cecyt_logo.png" alt="CECyT 3"></div>
+              </div>
+              <div class="calificaciones-info">
+                <div><strong>BOLETA:</strong> 2024031123</div>
+                <div><strong>NOMBRE:</strong> ELISUA AYELEN MARTÍNEZ HERNÁNDEZ</div>
+              </div>
+              <div class="calificaciones-placeholder"></div>
             </div>
           </div>
 
@@ -4531,6 +4750,8 @@
     const map = {
       'menu': 'panel-menu',
       'expediente-digital': 'panel-expediente-digital',
+      'pase-digital': 'panel-pase-digital',
+      'calificaciones': 'panel-calificaciones',
       'datos-personales': 'panel-datos-personales',
       'datos-medicos': 'panel-datos-medicos',
       'datos-extracurriculares': 'panel-datos-extracurriculares',
